@@ -1,0 +1,22 @@
+{
+  "name": "webapp",
+  "authors": [
+    "aloha <radomir.aloha@gmail.com>"
+  ],
+  "description": "UPP course, FTN",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "^0.4.2",
+    "angular": "^1.6.1"
+  }
+}

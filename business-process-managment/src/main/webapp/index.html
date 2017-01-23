@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+
+    <title>Process Management Tool</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+
+<body ng-app="bpm_app">
+
+
+<!--APP UI-VIEWs-->
+<!-------------------------------------------------------------------------------------------->
+<h3>Process Management Tool</h3>
+<div ui-view="navbar"></div>
+<div ui-view="content"></div>
+<!-- <div class="footer"><p>© Copyright reserved to Travel Safe</p></div -->
+<!-------------------------------------------------------------------------------------------->
+
+<!-- ALERTIFY -->
+<!-------------------------------------------------------------------------------------------->
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/alertifyjs/1.6.1/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.6.1/css/themes/bootstrap.min.css"/>
+<!-------------------------------------------------------------------------------------------->
+
+
+<!-- BOWER COMPONENTS -->
+<!-------------------------------------------------------------------------------------------->
+<script src="/bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-------------------------------------------------------------------------------------------->
+
+
+<!-- ANGULAR APP -->
+<!-------------------------------------------------------------------------------------------->
+<script src="app/app.module.js"></script>
+<script src="app/app.state.js"></script>
+<!--navbar-->
+<script src="navbar/navbar.controller.js"></script>
+<!--home-->
+<script src="home/home.controller.js"></script>
+<!-------------------------------------------------------------------------------------------->
+
+
+</body>
+</html>
