@@ -37,6 +37,8 @@ public class UserRepository {
         return (ArrayList<User>) identityService.createUserQuery().list();
     }
 
+    //TODO get users from group
+
 
     public Optional<User> getById(String id){
         ArrayList<User> users =  getAll();

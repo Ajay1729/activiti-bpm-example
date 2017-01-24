@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.jwt.JWTFilter;
+import com.example.interceptor.JWTFilter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

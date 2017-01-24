@@ -22,3 +22,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+business-process-managment\src\main\webapp\bower_components

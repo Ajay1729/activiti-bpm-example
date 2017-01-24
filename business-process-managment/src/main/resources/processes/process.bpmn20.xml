@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="process" isExecutable="true">
-    <startEvent id="sid-2A17C8F5-EDA4-466B-A9E8-CAD88081097E"></startEvent>
+    <startEvent id="sid-2A17C8F5-EDA4-466B-A9E8-CAD88081097E">
+      <extensionElements>
+        <activiti:formProperty id="new_property_2222" name="prvoooo" type="string"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
     <userTask id="sid-0CF0A075-2EFD-4E7A-AE61-1769E822C077" name="jedan da il ne" activiti:candidateUsers="kermit">
       <extensionElements>
         <activiti:formProperty id="text" name="TEXT" type="string"></activiti:formProperty>

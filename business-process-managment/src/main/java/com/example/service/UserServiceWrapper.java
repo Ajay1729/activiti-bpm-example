@@ -22,6 +22,8 @@ public class UserServiceWrapper {
         return userRepository.getById(id);
     }
 
-
+    public void getUserRole(){
+        // TODO - get user role
+    }
 
 }

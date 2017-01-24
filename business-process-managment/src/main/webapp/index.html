@@ -4,7 +4,16 @@
 
     <title>Process Management Tool</title>
 
+    <!--bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Raleway', sans-serif;
+      }
+    </style>
 
 </head>
 
@@ -19,7 +28,7 @@
 <!-- <div class="footer"><p>© Copyright reserved to Travel Safe</p></div -->
 <!-------------------------------------------------------------------------------------------->
 
-<!-- ALERTIFY -->
+<!-- ALERTIFY LIBRARY-->
 <!-------------------------------------------------------------------------------------------->
 <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/alertifyjs/1.6.1/alertify.min.js"></script>
@@ -38,6 +47,7 @@
 <!-------------------------------------------------------------------------------------------->
 <script src="/bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 <!-------------------------------------------------------------------------------------------->
 
 
@@ -49,6 +59,10 @@
 <script src="navbar/navbar.controller.js"></script>
 <!--home-->
 <script src="home/home.controller.js"></script>
+<!--auth-->
+<script src="auth/login.state.js"></script>
+<script src="auth/login.controller.js"></script>
+<script src="auth/auth.service.js"></script>
 <!-------------------------------------------------------------------------------------------->
 
 

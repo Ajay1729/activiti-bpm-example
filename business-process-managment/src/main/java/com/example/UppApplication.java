@@ -1,7 +1,10 @@
 package com.example;
 
-import com.example.jwt.JWTFilter;
+import com.example.interceptor.JWTFilter;
 import org.activiti.engine.*;
+import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.form.StartFormData;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,10 +13,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/***
+ *
+ // ACTIVITI HOW TO:
+ // spring guide
+ // https://spring.io/blog/2015/03/08/getting-started-with-activiti-and-spring-boot
+ // code from guide
+ // https://github.com/jbarrez/spring-boot-with-activiti-example
+ // activiti official guide
+ // https://www.activiti.org/userguide/#springSpringBoot
+ // [!] activiti rest api adds basic security - @enableAutoConfig(exclude=...) to disable it
+ *
+ * */
 @EnableAutoConfiguration(exclude = {
 		org.activiti.spring.boot.RestApiAutoConfiguration.class,
 		org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class,
@@ -23,23 +40,14 @@ import java.util.Map;
 @SpringBootApplication
 public class UppApplication {
 
-	// ACTIVITI HOW TO:
-	// spring guide
-	// https://spring.io/blog/2015/03/08/getting-started-with-activiti-and-spring-boot
-	// code from guide
-	// https://github.com/jbarrez/spring-boot-with-activiti-example
-	// activiti official guide
-	// https://www.activiti.org/userguide/#springSpringBoot
-	// [!] activiti rest api adds basic security - @enableAutoConfig(exclude=...) to disable it
-
-
+	public static final String PROCES_KEY = "process";
 
 	/* JWT FILTER */
 	@Bean
 	public FilterRegistrationBean jwtFilter() {
 		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 		registrationBean.setFilter(new JWTFilter());
-		// TODO add patters as you go
+		// TODO add patterns as you go
 		registrationBean.addUrlPatterns("/api/task/*");
 		return registrationBean;
 	}
@@ -65,12 +73,38 @@ public class UppApplication {
 			return new CommandLineRunner() {
 
 				public void run(String... strings) throws Exception {
+
+					/*add variables*/
 					Map<String, Object> variables = new HashMap<String, Object>();
-					variables.put("new_property_1", true);
-					//runtimeService.startProcessInstanceByKey("process", variables);
+					variables.put("new_property_2222", "THIS IS FIRST VAR BEFORE START");
+
+					/*get start form*/
+					List <ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCES_KEY).latestVersion().list();
+					System.out.println("PROCESSES "+PROCES_KEY+ ": "+runtimeService.createExecutionQuery().count());
+					for(ProcessDefinition pd: ls){
+						System.out.println(pd.getVersion());
+					}
+					ProcessDefinition processDef = ls.get(0);
+					//ProcessDefinition processDef = repositoryService.getProcessDefinition();
+					StartFormData startFormData = formService.getStartFormData(processDef.getId());
+					for(FormProperty formProperty: startFormData.getFormProperties()){
+						System.out.println("NAME: "+formProperty.getName()+" ID: "+ formProperty.getId()+" TYPE: "+formProperty.getType());
+					}
+
+					/*start proces*/
+					//runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
+					System.out.println("STARTED PROCESSES COUNT: "+runtimeService.createExecutionQuery().count());
+
+					/*get tasks*/
 					List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
-					Task task = tasks.get(0);
-					System.out.println(formService.getTaskFormData(task.getId()).getFormProperties().get(0).getName());
+					System.out.println("number of assigned tasks: "+tasks.size());
+
+					/*display task form*/
+					ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formService.getTaskFormData(tasks.get(0).getId()).getFormProperties();
+					for(FormProperty property: properties){
+						//todo field validation - is required, type
+						System.out.println("NAME: "+property.getName()+" ID: "+ property.getId()+" TYPE: "+property.getType());
+					}
 
 				}
 			};

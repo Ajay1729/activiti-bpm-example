@@ -1,4 +1,4 @@
-package com.example.jwt;
+package com.example.interceptor;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,7 +10,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.security.SignatureException;
 
 /**
  * Created by aloha on 22-Jan-17.

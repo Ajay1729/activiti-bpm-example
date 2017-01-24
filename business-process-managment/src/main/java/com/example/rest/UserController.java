@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Optional;
 
 /**
@@ -42,7 +43,9 @@ public class UserController {
 
         if(user.isPresent()){
             if(user.get().getPassword().equals(userLogin.getPassword())){
-                return new ResponseEntity<>(authService.buildToken(user.get()), HttpStatus.OK);
+                HashMap<String, String> responseObj = new HashMap<>();
+                responseObj.put("token", "Bearer "+authService.buildToken(user.get()));
+                return new ResponseEntity<>(responseObj, HttpStatus.OK);
             }
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }else{
