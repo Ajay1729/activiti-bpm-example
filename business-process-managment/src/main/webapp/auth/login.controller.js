@@ -21,8 +21,7 @@
                     AuthService.setHeader();
                     AuthService.me(
                         function(res){
-                            AuthService.saveToStorage("user", res.data);
-                            $rootScope.user = res.data;
+                            $rootScope.user = res.data.user;
                         },
                         function(res){
 

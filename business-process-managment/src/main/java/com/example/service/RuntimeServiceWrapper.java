@@ -26,7 +26,6 @@ public class RuntimeServiceWrapper {
 
 
     public void startProcess(String procesKey, String userId, Map<String, Object> params){
-        //todo start forma
         ProcessDefinition processDefinition = repositoryServiceWrapper.getProcessDefinition(procesKey);
         ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(procesKey);
         boolean canSubmit = formServiceWrapper.checkStartForm(properties, params);

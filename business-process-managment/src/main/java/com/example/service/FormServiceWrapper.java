@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.TaskExecutionDTO;
 import org.activiti.engine.FormService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +26,6 @@ public class FormServiceWrapper {
     public List<FormProperty> getTaskFormData(String taskId){
         TaskFormData taskFormData = formService.getTaskFormData(taskId);
         List<FormProperty> formProperties = taskFormData.getFormProperties();
-        //todo to json
         return formProperties;
     }
 
@@ -33,7 +34,6 @@ public class FormServiceWrapper {
         //formService.getStartFormData()
         StartFormData startFormData = formService.getStartFormData(procesDefId);
         List<FormProperty> formProperties = startFormData.getFormProperties();
-        //todo to json
         return formProperties;
     }
 
@@ -69,6 +69,16 @@ public class FormServiceWrapper {
 
         return canSubmit;
     }
+
+
+    public Map<String, String> transformExecutionObject(TaskExecutionDTO taskExecutionDTO){
+        Map<String, String> result = new HashMap<>();
+        for(Map<String, String> map : taskExecutionDTO.getFormProperties()){
+            result.put(map.get("id"), map.get("value"));
+        }
+        return result;
+    }
+
 
     public boolean checkStartForm(ArrayList<FormProperty> properties, Map<String, Object> params){
 

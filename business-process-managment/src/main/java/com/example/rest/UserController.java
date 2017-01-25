@@ -62,7 +62,9 @@ public class UserController {
     public ResponseEntity me(final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            return new ResponseEntity<>(new UserDTO(user.get()), HttpStatus.OK);
+            HashMap<String, UserDTO> res = new HashMap<>();
+            res.put("user", new UserDTO(user.get()));
+            return new ResponseEntity<>(res, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }

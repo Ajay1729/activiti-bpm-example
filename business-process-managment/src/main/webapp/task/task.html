@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+
+        <!--TASK LIST-->
+        <div class="col-md-6 col-md-offset-0">
+            <div class="alert alert-success" role="alert">My Tasks</div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Description </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="task in tasks track by $index">
+                            <td>
+                                {{$index+1}}
+                            </td>
+                            <td>
+                                {{task.taskName}}
+                            </td>
+                            <td>
+                                {{task.taskDescription}}
+                            </td>
+                            <td>
+                                <button ng-click="showTaskDetail(task.taskId)" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
+                                </button>
+                            </td>
+                         </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--TASK DETAIL-->
+        <div class="col-md-6 col-md-offset-0">
+            <div class="alert alert-success" role="alert">Task Detail</div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="property in currentForm track by $index">
+
+                        <!--property name-->
+                        <td>
+                            {{property.name}}
+                        </td>
+
+                        <!--input field : text or checkbox-->
+                        <!--text-->
+                        <td ng-if="property.type.name!='boolean'">
+                            <input type="text" class="form-control" placeholder="Enter here..." ng-model="property.value">
+                        </td>
+                        <!--or check box-->
+                        <td ng-if="property.type.name=='boolean'">
+                            <form action="">
+                                <input type="radio" ng-model="property.value" value="true">
+                                <input type="radio" ng-model="property.value" value="false">
+                            </form>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button ng-if="type=='my'" class="btn btn-success" type="button" ng-click="complete()">
+                Complete Task
+            </button>
+            <button ng-if="type=='involved'" class="btn btn-success" type="button" ng-click="claim()">
+                Claim Task
+            </button>
+        </div>
+
+    </div>
+</div>
