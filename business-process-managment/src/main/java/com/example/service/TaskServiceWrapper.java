@@ -1,9 +1,7 @@
 package com.example.service;
 
-import com.example.repository.TaskRepository;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
-import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +16,6 @@ import java.util.Map;
 public class TaskServiceWrapper {
 
     @Autowired
-    TaskRepository taskRepository;
-
-    @Autowired
     TaskService taskService;
 
     @Autowired
@@ -29,12 +24,12 @@ public class TaskServiceWrapper {
 
     public ArrayList<Task> getTasksAssignedToUser(String userId){
         System.out.println(">>> GETTING TASKS ASSIGNED TO USER");
-        return taskRepository.getTasksAssignedToUser(userId);
+        return (ArrayList<Task>) taskService.createTaskQuery().taskAssignee(userId).list();
     }
 
     public ArrayList<Task> getTasksThatCanBeClaimed(String userId){
         System.out.println(">>> GETTING TASKS THAT CAN BE CLAIMED");
-        return taskRepository.getTasksThatCanBeClaimed(userId);
+        return (ArrayList<Task>) taskService.createTaskQuery().taskCandidateUser(userId).list();
     }
 
 
@@ -43,6 +38,7 @@ public class TaskServiceWrapper {
             taskService.claim(taskId, userId);
         }
     }
+
 
     public void executeTask(String taskId, String userId, Map<String, String> params){
         if(canExecute(taskId, userId)){
@@ -62,17 +58,19 @@ public class TaskServiceWrapper {
     /* utility methods */
 
     public boolean canClaim(String taskId, String userId){
-        for (Task t : taskRepository.getTasksThatCanBeClaimed(userId))
+        for (Task t : getTasksThatCanBeClaimed(userId))
             if (t.getId().equals(taskId))
                 return true;
         return false;
     }
 
     public boolean canExecute(String taskId, String userId){
-        for (Task t : taskRepository.getTasksAssignedToUser(userId))
+        for (Task t : getTasksAssignedToUser(userId))
             if (t.getId().equals(taskId))
                 return true;
         return false;
     }
+
+
 
 }

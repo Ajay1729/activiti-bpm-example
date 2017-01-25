@@ -22,7 +22,7 @@ public class AuthService {
     private static final String ROLE_CLAIM = "role";
 
     @Autowired
-    UserServiceWrapper userService;
+    IdentityServiceWrapper userService;
 
 
 
@@ -46,7 +46,7 @@ public class AuthService {
         String token = authHeader.substring(7); // The part after "Bearer "
         Claims claims = Jwts.parser().setSigningKey(JWTFilter.SECRET_KEY).parseClaimsJws(token).getBody();
         String id = (String) claims.get("sub"); //subject as setSubject(...)
-        return userService.getUserById(id);
+        return userService.getById(id);
 
     }
 

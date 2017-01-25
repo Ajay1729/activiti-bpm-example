@@ -3,34 +3,34 @@
 
         <!--TASK LIST-->
         <div class="col-md-6 col-md-offset-0">
-            <div class="alert alert-success" role="alert">My Tasks</div>
+            <div class="alert alert-success" role="alert">My Processes</div>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Description </th>
-                            <th> </th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description </th>
+                        <th> </th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="task in tasks track by $index">
-                            <td>
-                                {{$index+1}}
-                            </td>
-                            <td>
-                                {{task.taskName}}
-                            </td>
-                            <td>
-                                {{task.taskDescription}}
-                            </td>
-                            <td>
-                                <button ng-click="showTaskDetail(task.taskId)" class="btn btn-primary btn-sm">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
-                                </button>
-                            </td>
-                         </tr>
+                    <tr ng-repeat="process in processes track by $index">
+                        <td>
+                            {{$index+1}}
+                        </td>
+                        <td>
+                            {{process.name}}
+                        </td>
+                        <td>
+                            {{process.description}}
+                        </td>
+                        <td>
+                            <button ng-click="showProcessDetail(process.key)" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
+                            </button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -38,7 +38,7 @@
 
         <!--TASK DETAIL-->
         <div class="col-md-6 col-md-offset-0">
-            <div class="alert alert-success" role="alert">Task Form</div>
+            <div class="alert alert-success" role="alert">Start Form</div>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -72,11 +72,8 @@
                     </tbody>
                 </table>
             </div>
-            <button ng-if="type=='my'" class="btn btn-success" type="button" ng-click="complete()">
-                Complete Task
-            </button>
-            <button ng-if="type=='involved'" class="btn btn-success" type="button" ng-click="claim()">
-                Claim Task
+            <button class="btn btn-success" type="button" ng-click="start()">
+                Start Process
             </button>
         </div>
 

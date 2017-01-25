@@ -9,5 +9,11 @@
 
     function HomeController ($scope, $state) {
 
+        $scope.start = function(){
+            $state.go('process');
+        }
+
+
     }
+
 })();

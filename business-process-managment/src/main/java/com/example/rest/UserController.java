@@ -3,7 +3,7 @@ package com.example.rest;
 import com.example.dto.UserDTO;
 import com.example.dto.UserLogin;
 import com.example.service.AuthService;
-import com.example.service.UserServiceWrapper;
+import com.example.service.IdentityServiceWrapper;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class UserController {
 
 
     @Autowired
-    UserServiceWrapper userServiceWrapper;
+    IdentityServiceWrapper identityServiceWrapper;
 
     @Autowired
     AuthService authService;
@@ -39,7 +39,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity login(@RequestBody UserLogin userLogin){
 
-        Optional<User> user = userServiceWrapper.getUserById(userLogin.getId());
+        Optional<User> user = identityServiceWrapper.getById(userLogin.getId());
 
         if(user.isPresent()){
             if(user.get().getPassword().equals(userLogin.getPassword())){

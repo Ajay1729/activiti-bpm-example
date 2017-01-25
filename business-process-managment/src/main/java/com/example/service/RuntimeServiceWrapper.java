@@ -25,13 +25,19 @@ public class RuntimeServiceWrapper {
     FormServiceWrapper formServiceWrapper;
 
 
-    public void startProcess(String procesKey, String userId, Map<String, Object> params){
-        ProcessDefinition processDefinition = repositoryServiceWrapper.getProcessDefinition(procesKey);
-        ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(procesKey);
+    /**
+     * Start process
+     * */
+    public void startProcess(String processKey, String userId, Map<String, Object> params){
+        params.put("initiator", userId);
+        ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(processKey);
         boolean canSubmit = formServiceWrapper.checkStartForm(properties, params);
         if(canSubmit){
-            runtimeService.startProcessInstanceByKey(procesKey, params);
+            runtimeService.startProcessInstanceByKey(processKey, params);
         }
     }
+
+
+
 
 }

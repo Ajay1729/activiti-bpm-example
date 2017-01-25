@@ -1,10 +1,12 @@
 package com.example.service;
 
-import com.example.dto.TaskExecutionDTO;
+import com.example.dto.ExecutionDTO;
+import org.activiti.bpmn.model.Process;
 import org.activiti.engine.FormService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,10 @@ public class FormServiceWrapper {
     @Autowired
     FormService formService;
 
+    @Autowired
+    RepositoryServiceWrapper repositoryServiceWrapper;
+
+
     public List<FormProperty> getTaskFormData(String taskId){
         TaskFormData taskFormData = formService.getTaskFormData(taskId);
         List<FormProperty> formProperties = taskFormData.getFormProperties();
@@ -30,18 +36,35 @@ public class FormServiceWrapper {
     }
 
 
-    public List<FormProperty> getStartFormData(String procesDefId){
-        //formService.getStartFormData()
-        StartFormData startFormData = formService.getStartFormData(procesDefId);
+    public List<FormProperty> getStartFormData(String processKey){
+        ProcessDefinition processDef = repositoryServiceWrapper.getProcessDefinition(processKey);
+        StartFormData startFormData = formService.getStartFormData(processDef.getId());
         List<FormProperty> formProperties = startFormData.getFormProperties();
         return formProperties;
     }
 
-
-
-    /* execute task */
+    /**
+     * Execute/finish task
+     * */
     public void submitTaskFormData(String taskId, Map<String, String> params){
         formService.submitTaskFormData(taskId, params);
+    }
+
+
+    public Map<String, String> makeTaskFormParams(ExecutionDTO executionDTO){
+        Map<String, String> result = new HashMap<>();
+        for(Map<String, String> map : executionDTO.getFormProperties()){
+            result.put(map.get("id"), map.get("value"));
+        }
+        return result;
+    }
+
+    public Map<String, Object> makeStartFormParams(ExecutionDTO executionDTO){
+        Map<String, Object> result = new HashMap<>();
+        for(Map<String, String> map : executionDTO.getFormProperties()){
+            result.put(map.get("id"), map.get("value"));
+        }
+        return result;
     }
 
 
@@ -68,15 +91,6 @@ public class FormServiceWrapper {
         }
 
         return canSubmit;
-    }
-
-
-    public Map<String, String> transformExecutionObject(TaskExecutionDTO taskExecutionDTO){
-        Map<String, String> result = new HashMap<>();
-        for(Map<String, String> map : taskExecutionDTO.getFormProperties()){
-            result.put(map.get("id"), map.get("value"));
-        }
-        return result;
     }
 
 

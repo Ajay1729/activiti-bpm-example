@@ -1,9 +1,8 @@
-package com.example.repository;
+package com.example.service;
 
-import org.activiti.engine.*;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,33 +11,17 @@ import java.util.Optional;
 /**
  * Created by aloha on 22-Jan-17.
  */
-@Component
-public class UserRepository {
-
-    //usually i'll just extends JPA repo
-
-    @Autowired
-    RepositoryService repositoryService;
-
-    @Autowired
-    RuntimeService runtimeService;
-
-    @Autowired
-    TaskService taskService;
-
-    @Autowired
-    FormService formService;
+@Service
+public class IdentityServiceWrapper {
 
     @Autowired
     IdentityService identityService;
-
 
     public ArrayList<User> getAll(){
         return (ArrayList<User>) identityService.createUserQuery().list();
     }
 
     //TODO get users from group
-
 
     public Optional<User> getById(String id){
         ArrayList<User> users =  getAll();
@@ -48,7 +31,6 @@ public class UserRepository {
         }
         return Optional.empty();
     }
-
 
 
 }

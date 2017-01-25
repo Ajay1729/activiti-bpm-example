@@ -1,7 +1,6 @@
 package com.example.rest;
 
-import com.example.dto.TaskExecutionDTO;
-import com.example.dto.UserDTO;
+import com.example.dto.ExecutionDTO;
 import com.example.service.AuthService;
 import com.example.service.FormServiceWrapper;
 import com.example.service.TaskServiceWrapper;
@@ -51,6 +50,7 @@ public class TaskController {
                 //map.put("taskDefinitionKey", task.getTaskDefinitionKey());
                 map.put("taskName", task.getName());
                 map.put("taskDescription", task.getDescription());
+                //task.getProcessDefinitionId() //todo name of process that task belongs to
                 customTaskList.add(map);
             }
             System.out.println("Number of tasks: "+list.size());
@@ -77,11 +77,11 @@ public class TaskController {
     @RequestMapping(value = "/execute",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity execute(@RequestBody TaskExecutionDTO data, final HttpServletRequest request)throws ServletException {
+    public ResponseEntity execute(@RequestBody ExecutionDTO data, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            Map<String, String> params = formServiceWrapper.transformExecutionObject(data);
-            taskServiceWrapper.executeTask(data.getTaskId(), user.get().getId(), params);
+            Map<String, String> params = formServiceWrapper.makeTaskFormParams(data);
+            taskServiceWrapper.executeTask(data.getId(), user.get().getId(), params);
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

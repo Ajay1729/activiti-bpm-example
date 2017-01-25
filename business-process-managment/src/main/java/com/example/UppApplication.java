@@ -40,6 +40,7 @@ import java.util.Map;
 @SpringBootApplication
 public class UppApplication {
 
+	//TODO - tabla gde svaka rola ima key procesa
 	public static final String PROCES_KEY = "process";
 
 	/* JWT FILTER */
@@ -77,6 +78,7 @@ public class UppApplication {
 					/*add variables*/
 					Map<String, Object> variables = new HashMap<String, Object>();
 					variables.put("new_property_2222", "THIS IS FIRST VAR BEFORE START");
+					variables.put("initiator", "admin");
 
 					/*get start form*/
 					List <ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCES_KEY).latestVersion().list();
@@ -92,7 +94,7 @@ public class UppApplication {
 					}
 
 					/*start proces*/
-					//runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
+					runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
 					System.out.println("STARTED PROCESSES COUNT: "+runtimeService.createExecutionQuery().count());
 
 					/*get tasks*/

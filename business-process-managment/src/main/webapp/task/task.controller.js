@@ -9,25 +9,32 @@
 
     function TaskController($scope, $state, AuthService, $rootScope, TaskService, $stateParams) {
 
+        $scope.type = $stateParams.type; // my or involved
+        $scope.tasks = []; // tasks list
+        $scope.currentForm = []; // current selected tasks form
+        $scope.currentTaskId; // current selected task id
 
-        $scope.tasks = [];
-        $scope.currentForm = [];
-        $scope.currentTaskId;
+        var getTasks = function(){
 
-        $scope.type = $stateParams.type;
+            if($scope.type==='my'){
+                TaskService.my(
+                    function(res){
+                        $scope.tasks = res.data;
+                    },
+                    function(res){
+                    }
+                );
+            }else
+            if($scope.type==='involved'){
+                    alert("todo");
+            }
 
-        if($scope.type==='my'){
-            TaskService.my(
-                function(res){
-                    $scope.tasks = res.data;
-                },
-                function(res){
-                }
-            );
-        }else
-        if($scope.type==='involved'){
-            alert("todo");
+             $scope.currentForm = []; // current selected tasks form
+             $scope.currentTaskId = undefined;
+
         }
+
+        getTasks();
 
         $scope.showTaskDetail = function(taskId){
             $scope.currentTaskId = taskId;
@@ -53,13 +60,12 @@
             TaskService.completeTask(
                 o,
                 function(res){
-
+                    getTasks();
                 },
                 function(res){
 
                 });
         }
-
 
         $scope.claim = function(){
             alert('todo');
@@ -68,7 +74,7 @@
         //util function
         var transform = function(){
             var obj = {}
-            obj.taskId=$scope.currentTaskId+"";
+            obj.id=$scope.currentTaskId+"";
             obj.formProperties=[];
             for(var i=0; i<$scope.currentForm.length; i++){
                 var tmp={};
