@@ -39,6 +39,16 @@
                     }
                 }
              $http(req).then(onSuccess, onError);
+            },
+            involved:function(onSuccess, onError){
+                var req = {
+                    method: 'GET',
+                    url: '/api/task/involved',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                $http(req).then(onSuccess, onError);
             }
         }
 

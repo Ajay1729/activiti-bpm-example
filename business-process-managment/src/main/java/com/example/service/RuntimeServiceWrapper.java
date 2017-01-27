@@ -3,10 +3,12 @@ package com.example.service;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,11 +35,20 @@ public class RuntimeServiceWrapper {
         ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(processKey);
         boolean canSubmit = formServiceWrapper.checkStartForm(properties, params);
         if(canSubmit){
-            runtimeService.startProcessInstanceByKey(processKey, params);
+            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey, params);
+            //todo set name - use some global var - name of student
+            runtimeService.setProcessInstanceName(processInstance.getId(), "my process name :)");
         }
     }
 
+    public void getVariable(String  variableName){
+        //todo get global vars
+        //runtimeService.setProcessInstanceName();
 
+    }
 
+    public List<ProcessInstance> getProcessInstancesByProcessDefinitionKey(String processDefKey){
+        return runtimeService.createProcessInstanceQuery().processDefinitionKey(processDefKey).list();
+    }
 
 }

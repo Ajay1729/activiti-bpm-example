@@ -11,7 +11,7 @@ angular
 
          $stateProvider
            .state('process', {
-                   url: '/process',
+                   url: '/process/:type',
                    views: {
                        'content@': {
                            templateUrl: 'process/process.html',

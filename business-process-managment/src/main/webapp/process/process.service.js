@@ -39,6 +39,16 @@
                     }
                 }
              $http(req).then(onSuccess, onError);
+            },
+            instances:function(id, onSuccess, onError){
+                var req = {
+                    method: 'GET',
+                    url: '/api/process/instances/'+id,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+             $http(req).then(onSuccess, onError);
             }
         }
 

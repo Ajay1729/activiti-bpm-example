@@ -8,6 +8,7 @@ import com.example.service.RuntimeServiceWrapper;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.example.UppApplication.PROCES_KEY;
 
@@ -49,14 +47,14 @@ public class ProcessController {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
 
-            //-------//
-            // todo - get processes that belong to current user
+            //---------------------------------------------------------------------------------------------------//
+            // todo - get processes that belong to current user ??
             ProcessDefinition processDefinition = repositoryServiceWrapper.getProcessDefinition(PROCES_KEY);
             Map<String, String > map = new HashMap<>();
             map.put("key", processDefinition.getKey());
             map.put("name", processDefinition.getName());
             map.put("description", processDefinition.getDescription());
-            //--------
+            //---------------------------------------------------------------------------------------------------//
 
 
             ArrayList<Map<String, String>> procesiiiii = new ArrayList<>();
@@ -87,6 +85,7 @@ public class ProcessController {
     public ResponseEntity execute(@RequestBody ExecutionDTO data, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
+            //getId is processdefKey
             Map<String, Object> params = formServiceWrapper.makeStartFormParams(data);
             runtimeServiceWrapper.startProcess(data.getId(), user.get().getId(), params);
             return new ResponseEntity(HttpStatus.OK);
@@ -95,6 +94,25 @@ public class ProcessController {
     }
 
 
+    @RequestMapping(value = "/instances/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity processInstances(@PathVariable String id, final HttpServletRequest request)throws ServletException {
+        Optional<User> user = authService.getUserFromRequest(request);
+        if(user.isPresent()){
+            //id is key
+            List<ProcessInstance> instances = runtimeServiceWrapper.getProcessInstancesByProcessDefinitionKey(id);
+            List<Map<String, Object>> custom = new ArrayList<>();
+            for(ProcessInstance processInstance:instances){
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", processInstance.getId());
+                map.put("name", processInstance.getName());
+                custom.add(map);
+            }
+            return new ResponseEntity<>(custom, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
 
 

@@ -5,6 +5,7 @@ import org.activiti.engine.*;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -50,6 +51,7 @@ public class UppApplication {
 		registrationBean.setFilter(new JWTFilter());
 		// TODO add patterns as you go
 		registrationBean.addUrlPatterns("/api/task/*");
+		registrationBean.addUrlPatterns("/api/process/*");
 		return registrationBean;
 	}
 
@@ -94,7 +96,7 @@ public class UppApplication {
 					}
 
 					/*start proces*/
-					runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
+					//runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
 					System.out.println("STARTED PROCESSES COUNT: "+runtimeService.createExecutionQuery().count());
 
 					/*get tasks*/
@@ -106,6 +108,14 @@ public class UppApplication {
 					for(FormProperty property: properties){
 						//todo field validation - is required, type
 						System.out.println("NAME: "+property.getName()+" ID: "+ property.getId()+" TYPE: "+property.getType());
+					}
+
+
+					/*getting process instances*/
+					List<ProcessInstance> instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").list();
+
+					for(ProcessInstance pi: instances){
+						//System.out.println(pi.getId());
 					}
 
 				}

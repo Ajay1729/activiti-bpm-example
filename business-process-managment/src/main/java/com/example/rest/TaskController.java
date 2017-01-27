@@ -53,11 +53,36 @@ public class TaskController {
                 //task.getProcessDefinitionId() //todo name of process that task belongs to
                 customTaskList.add(map);
             }
-            System.out.println("Number of tasks: "+list.size());
             return new ResponseEntity<>(customTaskList, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+
+
+    @RequestMapping(value = "/involved",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity involved(final HttpServletRequest request)throws ServletException {
+        Optional<User> user = authService.getUserFromRequest(request);
+        if(user.isPresent()){
+            ArrayList<Task> list = taskServiceWrapper.getTasksThatCanBeClaimed(user.get().getId());
+            List<Map<String, Object>> customTaskList = new ArrayList<>();
+            for (Task task : list) {
+                Map<String, Object> map = new LinkedHashMap<>();
+                map.put("taskId", task.getId());
+                //map.put("taskDefinitionKey", task.getTaskDefinitionKey());
+                map.put("taskName", task.getName());
+                map.put("taskDescription", task.getDescription());
+                //task.getProcessDefinitionId() //todo name of process that task belongs to
+                customTaskList.add(map);
+            }
+            return new ResponseEntity<>(customTaskList, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+
 
 
     @RequestMapping(value = "/{id}",

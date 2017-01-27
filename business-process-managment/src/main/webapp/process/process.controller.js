@@ -9,21 +9,25 @@
 
     function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams) {
 
-
+        $scope.type = $stateParams.type; // my or instances
         $scope.processes = []; //  list
         $scope.currentForm = []; // current selected statprocess form
         $scope.currentProcessKey; // current selected process id
+        $scope.processInstances=[];
 
         var getProcesses = function(){
-            ProcessService.my(
-                function(res){
-                    $scope.processes = res.data;
-                },
-                function(res){
-                }
-            );
-             $scope.currentForm = [];
-             $scope.currentProcessKey = undefined;
+
+                //get process def that I can start
+                ProcessService.my(
+                    function(res){
+                        $scope.processes = res.data;
+                    },
+                    function(res){
+                    }
+                );
+                 $scope.currentForm = [];
+                 $scope.currentProcessKey = undefined;
+
         }
 
         getProcesses();
@@ -41,6 +45,20 @@
              );
 
         }
+
+        $scope.showProcessInstances = function(processId){
+                    $scope.currentProcessKey = processId;
+                    ProcessService.instances(
+                                    processId,
+                                    function(res){
+                                        $scope.processInstances = res.data;
+                                    },
+                                    function(res){
+
+                                    }
+                     );
+
+                }
 
         $scope.start = function(){
             var o = transform();

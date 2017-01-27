@@ -17,6 +17,7 @@
         var getTasks = function(){
 
             if($scope.type==='my'){
+                //get my tasks
                 TaskService.my(
                     function(res){
                         $scope.tasks = res.data;
@@ -26,9 +27,18 @@
                 );
             }else
             if($scope.type==='involved'){
-                    alert("todo");
+                //get tasks im involved in
+                TaskService.involved(
+                function(res){
+                    $scope.tasks = res.data;
+                },
+                function(res){
+
+                }
+                )
             }
 
+             //reset current selected
              $scope.currentForm = []; // current selected tasks form
              $scope.currentTaskId = undefined;
 
@@ -37,8 +47,11 @@
         getTasks();
 
         $scope.showTaskDetail = function(taskId){
+
+            //save current task id
             $scope.currentTaskId = taskId;
             if($scope.type==='my'){
+                //get task form
                 TaskService.getTaskForm(
                                 taskId,
                                 function(res){
@@ -50,11 +63,14 @@
                  );
              }else
              if($scope.type==='involved'){
+
                 alert("todo");
              }
+
         }
 
         $scope.complete = function(){
+            //complete task
             var o = transform();
             console.log(o);
             TaskService.completeTask(
@@ -68,7 +84,9 @@
         }
 
         $scope.claim = function(){
+
             alert('todo');
+
         }
 
         //util function

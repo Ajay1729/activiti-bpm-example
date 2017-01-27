@@ -2,6 +2,7 @@ package com.example.service;
 
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,30 @@ public class TaskServiceWrapper {
     @Autowired
     FormServiceWrapper formServiceWrapper;
 
+    @Autowired
+    IdentityServiceWrapper identityServiceWrapper;
 
     public ArrayList<Task> getTasksAssignedToUser(String userId){
-        System.out.println(">>> GETTING TASKS ASSIGNED TO USER");
         return (ArrayList<Task>) taskService.createTaskQuery().taskAssignee(userId).list();
     }
 
     public ArrayList<Task> getTasksThatCanBeClaimed(String userId){
-        System.out.println(">>> GETTING TASKS THAT CAN BE CLAIMED");
-        return (ArrayList<Task>) taskService.createTaskQuery().taskCandidateUser(userId).list();
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        /*1*/
+        for(Task task : taskService.createTaskQuery().taskCandidateUser(userId).list()){
+            tasks.add(task);
+        }
+
+        /*2*/
+        ArrayList<Group> groups = (ArrayList<Group>) identityServiceWrapper.getUsersGroups(userId);
+        for(Group group:groups){
+            for(Task task : taskService.createTaskQuery().taskCandidateGroup(group.getId()).list()){
+                tasks.add(task);
+            }
+        }
+
+        return tasks;
     }
 
 
@@ -37,6 +53,7 @@ public class TaskServiceWrapper {
         if(canClaim(taskId, userId)) {
             taskService.claim(taskId, userId);
         }
+
     }
 
 

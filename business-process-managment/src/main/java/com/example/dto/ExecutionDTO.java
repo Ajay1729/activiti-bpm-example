@@ -8,8 +8,20 @@ import java.util.Map;
  */
 public class ExecutionDTO {
 
+    /**
+     * task id / process key
+     * */
     private String id;
+
+
+    /**
+     * list of form properties
+     * each property is map with two key/val pairs
+     * id:propertyId
+     * value:propertyValue
+     * */
     private ArrayList<Map<String, String>> formProperties;
+
 
     public ExecutionDTO(){}
 

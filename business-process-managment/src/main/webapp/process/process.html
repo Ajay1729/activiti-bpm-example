@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
 
-        <!--TASK LIST-->
+        <!--PROCESS DEFINITION LIST-->
         <div class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">My Processes</div>
             <div class="table-responsive">
@@ -11,7 +11,8 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Description </th>
-                        <th> </th>
+                        <th ng-if="type=='my'">Start Form</th>
+                        <th ng-if="type=='instances'">Instances</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,7 +27,11 @@
                             {{process.description}}
                         </td>
                         <td>
-                            <button ng-click="showProcessDetail(process.key)" class="btn btn-primary btn-sm">
+                            <button ng-if="type=='my'" ng-click="showProcessDetail(process.key)" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
+                            </button>
+
+                            <button ng-if="type=='instances'" ng-click="showProcessInstances(process.key)" class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
                             </button>
                         </td>
@@ -36,15 +41,15 @@
             </div>
         </div>
 
-        <!--TASK DETAIL-->
-        <div class="col-md-6 col-md-offset-0">
+        <!-- FORM - START FORM-->
+        <div ng-if="type=='my'" class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">Start Form</div>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th> </th>
-                        <th> </th>
+                        <th> Field</th>
+                        <th> Value</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,6 +81,38 @@
                 Start Process
             </button>
         </div>
+
+
+        <!-- PROCESS INSTANCES-->
+        <div ng-if="type=='instances'" class="col-md-6 col-md-offset-0">
+            <div class="alert alert-success" role="alert">Process Instances</div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Instance Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="instance in processInstances track by $index">
+
+                        <td>
+                            {{$index+1}}
+                        </td>
+
+                        <td>
+                            {{instance.name}}
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
 
     </div>
 </div>
