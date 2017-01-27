@@ -18,10 +18,25 @@ public class RepositoryServiceWrapper {
     RepositoryService repositoryService;
 
 
-    public ProcessDefinition getProcessDefinition(String processKey){
+    public ProcessDefinition getProcessDefByProcessDefKey(String processKey){
         List<ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike(processKey).latestVersion().list();
         return ls.get(0);
     }
+
+    public List<ProcessDefinition> getProcessDefStartableByUser(String userId){
+        return repositoryService.createProcessDefinitionQuery().startableByUser(userId).list();
+    }
+
+    public void getProcessDefStartableByGroup(){
+        //startable by user check for groups user belongs to
+    }
+
+    public void setProcessDefStartableGroup(String processDefId, String groupId){
+        repositoryService.addCandidateStarterGroup(processDefId, groupId);
+    }
+
+
+
 
 
 }

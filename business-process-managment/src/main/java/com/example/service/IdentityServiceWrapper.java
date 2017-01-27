@@ -20,10 +20,14 @@ public class IdentityServiceWrapper {
     IdentityService identityService;
 
     public ArrayList<User> getAll(){
+
         return (ArrayList<User>) identityService.createUserQuery().list();
+
     }
 
-    //TODO get users from group
+    //TODO [!] get users from certain group
+
+
 
     public List<Group> getUsersGroups(String userId){
         return identityService.createGroupQuery().groupMember(userId).list();

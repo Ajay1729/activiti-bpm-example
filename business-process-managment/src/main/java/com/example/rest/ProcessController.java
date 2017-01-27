@@ -40,6 +40,10 @@ public class ProcessController {
     @Autowired
     RuntimeServiceWrapper runtimeServiceWrapper;
 
+
+    /**
+     * Returns process definitions that user can start
+     * */
     @RequestMapping(value = "/my",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,31 +51,32 @@ public class ProcessController {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
 
-            //---------------------------------------------------------------------------------------------------//
-            // todo - get processes that belong to current user ??
-            ProcessDefinition processDefinition = repositoryServiceWrapper.getProcessDefinition(PROCES_KEY);
-            Map<String, String > map = new HashMap<>();
-            map.put("key", processDefinition.getKey());
-            map.put("name", processDefinition.getName());
-            map.put("description", processDefinition.getDescription());
-            //---------------------------------------------------------------------------------------------------//
+            ArrayList<ProcessDefinition> startable = (ArrayList<ProcessDefinition>) repositoryServiceWrapper.getProcessDefStartableByUser(user.get().getId());
+            ArrayList<Map<String, String>> customStartable = new ArrayList<>();
+            for(ProcessDefinition processDefinition: startable) {
+                Map<String, String> map = new HashMap<>();
+                map.put("key", processDefinition.getKey());
+                map.put("name", processDefinition.getName());
+                map.put("description", processDefinition.getDescription());
+                customStartable.add(map);
+            }
+            return new ResponseEntity<>(customStartable, HttpStatus.OK);
 
-
-            ArrayList<Map<String, String>> procesiiiii = new ArrayList<>();
-            procesiiiii.add(map);
-            return new ResponseEntity<>(procesiiiii, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
 
+    /**
+     * Returns start form
+     * params: process def key
+     * */
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity startForm(@PathVariable String id, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            //todo maybe process + form, not just form
             ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(id);
             return new ResponseEntity<>(properties, HttpStatus.OK);
         }
@@ -79,13 +84,16 @@ public class ProcessController {
     }
 
 
+    /**
+     * Start process definition
+     * params: process def key & start form params
+     * */
     @RequestMapping(value = "/start",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity execute(@RequestBody ExecutionDTO data, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            //getId is processdefKey
             Map<String, Object> params = formServiceWrapper.makeStartFormParams(data);
             runtimeServiceWrapper.startProcess(data.getId(), user.get().getId(), params);
             return new ResponseEntity(HttpStatus.OK);
@@ -94,14 +102,19 @@ public class ProcessController {
     }
 
 
+
+    /**
+     * Returns process instances
+     * params: process def key
+     * */
     @RequestMapping(value = "/instances/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity processInstances(@PathVariable String id, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            //id is key
-            List<ProcessInstance> instances = runtimeServiceWrapper.getProcessInstancesByProcessDefinitionKey(id);
+
+            List<ProcessInstance> instances = runtimeServiceWrapper.getProcessInstancesStartedByUser(user.get().getId(), id);
             List<Map<String, Object>> custom = new ArrayList<>();
             for(ProcessInstance processInstance:instances){
                 Map<String, Object> map = new HashMap<>();

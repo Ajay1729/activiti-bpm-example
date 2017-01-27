@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.dto.ExecutionDTO;
-import org.activiti.bpmn.model.Process;
 import org.activiti.engine.FormService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
@@ -37,7 +36,7 @@ public class FormServiceWrapper {
 
 
     public List<FormProperty> getStartFormData(String processKey){
-        ProcessDefinition processDef = repositoryServiceWrapper.getProcessDefinition(processKey);
+        ProcessDefinition processDef = repositoryServiceWrapper.getProcessDefByProcessDefKey(processKey);
         StartFormData startFormData = formService.getStartFormData(processDef.getId());
         List<FormProperty> formProperties = startFormData.getFormProperties();
         return formProperties;

@@ -9,13 +9,13 @@ import java.util.Map;
 public class ExecutionDTO {
 
     /**
-     * task id / process key
+     * task id OR process key
      * */
     private String id;
 
 
     /**
-     * list of form properties
+     * list of form properties (task form properties OR start form properties)
      * each property is map with two key/val pairs
      * id:propertyId
      * value:propertyValue

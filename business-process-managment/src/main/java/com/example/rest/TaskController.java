@@ -50,7 +50,7 @@ public class TaskController {
                 //map.put("taskDefinitionKey", task.getTaskDefinitionKey());
                 map.put("taskName", task.getName());
                 map.put("taskDescription", task.getDescription());
-                //task.getProcessDefinitionId() //todo name of process that task belongs to
+                //task.getProcessDefinitionId() //todo add more task info, like name of process that task belongs to
                 customTaskList.add(map);
             }
             return new ResponseEntity<>(customTaskList, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class TaskController {
                 //map.put("taskDefinitionKey", task.getTaskDefinitionKey());
                 map.put("taskName", task.getName());
                 map.put("taskDescription", task.getDescription());
-                //task.getProcessDefinitionId() //todo name of process that task belongs to
+                //task.getProcessDefinitionId() //todo add more task info, like name of process that task belongs to
                 customTaskList.add(map);
             }
             return new ResponseEntity<>(customTaskList, HttpStatus.OK);

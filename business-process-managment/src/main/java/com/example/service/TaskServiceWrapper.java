@@ -25,6 +25,7 @@ public class TaskServiceWrapper {
     @Autowired
     IdentityServiceWrapper identityServiceWrapper;
 
+
     public ArrayList<Task> getTasksAssignedToUser(String userId){
         return (ArrayList<Task>) taskService.createTaskQuery().taskAssignee(userId).list();
     }
@@ -32,12 +33,12 @@ public class TaskServiceWrapper {
     public ArrayList<Task> getTasksThatCanBeClaimed(String userId){
         ArrayList<Task> tasks = new ArrayList<>();
 
-        /*1*/
+        /*1 - user is candidate*/
         for(Task task : taskService.createTaskQuery().taskCandidateUser(userId).list()){
             tasks.add(task);
         }
 
-        /*2*/
+        /*2 - group that user belongs is candidate*/
         ArrayList<Group> groups = (ArrayList<Group>) identityServiceWrapper.getUsersGroups(userId);
         for(Group group:groups){
             for(Task task : taskService.createTaskQuery().taskCandidateGroup(group.getId()).list()){
@@ -53,7 +54,6 @@ public class TaskServiceWrapper {
         if(canClaim(taskId, userId)) {
             taskService.claim(taskId, userId);
         }
-
     }
 
 
@@ -67,12 +67,6 @@ public class TaskServiceWrapper {
         }
     }
 
-
-
-
-
-
-    /* utility methods */
 
     public boolean canClaim(String taskId, String userId){
         for (Task t : getTasksThatCanBeClaimed(userId))

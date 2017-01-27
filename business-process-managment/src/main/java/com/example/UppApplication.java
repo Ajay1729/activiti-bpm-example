@@ -89,7 +89,7 @@ public class UppApplication {
 						System.out.println(pd.getVersion());
 					}
 					ProcessDefinition processDef = ls.get(0);
-					//ProcessDefinition processDef = repositoryService.getProcessDefinition();
+					//ProcessDefinition processDef = repositoryService.getProcessDefByProcessDefKey();
 					StartFormData startFormData = formService.getStartFormData(processDef.getId());
 					for(FormProperty formProperty: startFormData.getFormProperties()){
 						System.out.println("NAME: "+formProperty.getName()+" ID: "+ formProperty.getId()+" TYPE: "+formProperty.getType());
@@ -116,6 +116,19 @@ public class UppApplication {
 
 					for(ProcessInstance pi: instances){
 						//System.out.println(pi.getId());
+					}
+
+
+					// process startable groups
+					//******************************************************************//
+					repositoryService.addCandidateStarterGroup("process:1:4", "admins");
+					//******************************************************************//
+					System.out.println("added startable group for proces def");
+					ArrayList<ProcessDefinition> def = (ArrayList<ProcessDefinition>) repositoryService.createProcessDefinitionQuery().startableByUser("admin").list();
+					System.out.println("getting process def startable by user");
+					for(ProcessDefinition pd:def){
+						System.out.println("Id procesa "+pd.getId());
+						System.out.println("Key procesa "+pd.getKey());
 					}
 
 				}
