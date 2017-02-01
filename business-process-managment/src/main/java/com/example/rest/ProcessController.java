@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static com.example.UppApplication.PROCES_KEY;
 
 /**
  * Created by aloha on 25-Jan-17.

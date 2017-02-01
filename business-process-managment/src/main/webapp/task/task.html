@@ -56,17 +56,31 @@
                             {{property.name}}
                         </td>
 
-                        <!--input field : text or checkbox-->
-                        <!--text-->
-                        <td ng-if="property.type.name!='boolean'">
+                        <!--input field -->
+                        <!--TEXT FIELD-->
+                        <td ng-if="property.type.name!='boolean' && !property.groupId">
                             <input type="text" class="form-control" placeholder="Enter here..." ng-model="property.value">
                         </td>
-                        <!--or check box-->
-                        <td ng-if="property.type.name=='boolean'">
+
+                        <!--RADIO BUTTON-->
+                        <td ng-if="property.type.name=='boolean' && !property.groupId">
                             <form action="">
-                                <input type="radio" ng-model="property.value" value="true">
-                                <input type="radio" ng-model="property.value" value="false">
+                                <input type="radio" ng-model="property.value" value="true">Yes
+                                <input type="radio" ng-model="property.value" value="false">No
                             </form>
+                        </td>
+
+                        <!--DROPDOWN MENU FOR PICKING USER-->
+                        <td ng-if="property.groupId">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    {{property.selectedUserName}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li ng-repeat="user in property.members track by $index"><a ng-click="userSelected(property.id, user)">{{user.firstName}} {{user.lastName}}</a></li>
+                                </ul>
+                            </div>
                         </td>
 
                     </tr>

@@ -2,7 +2,7 @@ package com.example.service;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.form.FormProperty;
-import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.constants.Constants.*;
+
 
 /**
  * Created by aloha on 23-Jan-17.
@@ -26,31 +29,29 @@ public class RuntimeServiceWrapper {
     @Autowired
     FormServiceWrapper formServiceWrapper;
 
+    @Autowired
+    IdentityServiceWrapper identityServiceWrapper;
+
 
     /**
-     * Start process
+     * Start process and set process initiator variable
      * */
     public void startProcess(String processKey, String userId, Map<String, Object> params){
-        //--------------------------------//
-        params.put("initiator", userId);
-        //--------------------------------//
+        params.put(INITIATOR, userId);
+        startProcess(processKey, params);
+    }
+
+
+    /**
+     * Start process without setting process initiator
+     * */
+    public void startProcess(String processKey, Map<String, Object> params){
         ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(processKey);
         boolean canSubmit = formServiceWrapper.checkStartForm(properties, params);
         if(canSubmit){
-            //start
-            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey, params);
-            //TODO [!] set process instance name - use some global var - name of student
-            runtimeService.setProcessInstanceName(processInstance.getId(), "this is process name ");
+            runtimeService.startProcessInstanceByKey(processKey, params);
         }
     }
-
-
-
-    public void getVariable(String  variableName){
-        //todo get global vars
-        //runtimeService.setProcessInstanceName();
-    }
-
 
 
     public List<ProcessInstance> getProcessInstancesStartedByUser(String userId, String processDefKey){

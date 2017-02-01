@@ -39,7 +39,7 @@ public class TaskController {
     @RequestMapping(value = "/mytasks",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity my(final HttpServletRequest request)throws ServletException {
+    public ResponseEntity myTasks(final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
             ArrayList<Task> list = taskServiceWrapper.getTasksAssignedToUser(user.get().getId());
@@ -91,7 +91,6 @@ public class TaskController {
     public ResponseEntity taskForm(@PathVariable String id, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            //todo maybe task + form, not just form
             ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getTaskFormData(id);
             return new ResponseEntity<>(properties, HttpStatus.OK);
         }
@@ -102,11 +101,24 @@ public class TaskController {
     @RequestMapping(value = "/execute",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity execute(@RequestBody ExecutionDTO data, final HttpServletRequest request)throws ServletException {
+    public ResponseEntity executeTask(@RequestBody ExecutionDTO data, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
             Map<String, String> params = formServiceWrapper.makeTaskFormParams(data);
             taskServiceWrapper.executeTask(data.getId(), user.get().getId(), params);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @RequestMapping(value = "/claim/{taskId}",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity claimTask(@PathVariable String taskId, final HttpServletRequest request)throws ServletException {
+        Optional<User> user = authService.getUserFromRequest(request);
+        if(user.isPresent()){
+            taskServiceWrapper.claimTask(taskId, user.get().getId());
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

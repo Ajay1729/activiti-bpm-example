@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+
 /**
  * Created by aloha on 23-Jan-17.
  */
@@ -19,11 +21,16 @@ public class RepositoryServiceWrapper {
 
 
     public ProcessDefinition getProcessDefByProcessDefKey(String processKey){
-        List<ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike(processKey).latestVersion().list();
+        List<ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKey(processKey).latestVersion().list();
         return ls.get(0);
     }
 
     public List<ProcessDefinition> getProcessDefStartableByUser(String userId){
+        //--------------------------------------------------------------------
+        //proces def key
+        //getProcessDefByProcessDefKey(PROCESS_01).getId();
+        //repositoryService.addCandidateStarterGroup("process:1:4", "admins");
+        //--------------------------------------------------------------------
         return repositoryService.createProcessDefinitionQuery().startableByUser(userId).list();
     }
 

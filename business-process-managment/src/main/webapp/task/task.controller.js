@@ -10,9 +10,11 @@
     function TaskController($scope, $state, AuthService, $rootScope, TaskService, $stateParams) {
 
         $scope.type = $stateParams.type; // my or involved
-        $scope.tasks = []; // tasks list
-        $scope.currentForm = []; // current selected tasks form
-        $scope.currentTaskId; // current selected task id
+
+        $scope.tasks = [];          // tasks list
+        $scope.currentForm = [];    // task form for current selected task
+        $scope.currentTaskId;       // current selected task id
+
 
         var getTasks = function(){
 
@@ -29,17 +31,17 @@
             if($scope.type==='involved'){
                 //get tasks im involved in
                 TaskService.involved(
-                function(res){
-                    $scope.tasks = res.data;
-                },
-                function(res){
+                    function(res){
+                        $scope.tasks = res.data;
+                    },
+                    function(res){
 
-                }
-                )
+                    }
+                );
             }
 
-             //reset current selected
-             $scope.currentForm = []; // current selected tasks form
+             //reset fields
+             $scope.currentForm = [];
              $scope.currentTaskId = undefined;
 
         }
@@ -50,25 +52,70 @@
 
             //save current task id
             $scope.currentTaskId = taskId;
-            if($scope.type==='my'){
-                //get task form
-                TaskService.getTaskForm(
-                                taskId,
-                                function(res){
-                                    $scope.currentForm = res.data;
-                                },
-                                function(res){
 
-                                }
-                 );
-             }else
-             if($scope.type==='involved'){
+            //get task form
+            TaskService.getTaskForm(
+                taskId,
+                function(res){
 
-                alert("todo");
-             }
+                    //form properties
+                    $scope.currentForm = res.data;
+
+                    //add dropdown menu items for property if needed
+                    if($scope.currentForm.length!=0){
+                        for(var i=0; i<$scope.currentForm.length; i++){
+                            //dropdown id for form property template: '<groupId>_group_member_<formPropertyId>'
+                            var id = $scope.currentForm[i].id;
+                            if(id.includes("_group_member_")){
+                                var idx = i;
+                                $scope.currentForm[i].groupId = id.split("_group_member_")[0];
+                                TaskService.usersByGroup(
+                                    $scope.currentForm[i].groupId,
+                                    function(res){
+                                        //$scope.currentForm[i].selectedUserName = "Pick User...";
+                                        $scope.currentForm[idx].members = [];
+                                        $scope.currentForm[idx].members=res.data;
+                                    },
+                                    function(res){
+
+                                    }
+                                );
+
+                            }else
+                            {
+                                $scope.currentForm[i].groupId = false;
+
+                                //test
+                                //$scope.currentForm[i].selectedUserName = "Pick User...";
+                                //$scope.currentForm[0].groupId="asdf";
+                                //$scope.currentForm[1].groupId="asdsasaf";
+                                //$scope.currentForm[0].members=[{firstName:"neko", id:1}];
+                                //$scope.currentForm[1].members=[{firstName:"nekosadsad", id:2}];
+
+                            }
+                        }
+                    }
+                },
+                function(res){
+
+                }
+             );
+
 
         }
 
+        //util
+        $scope.userSelected = function(propertyId, user){
+            //set value to user field
+            for(var i = 0; i<$scope.currentForm.length; i++){
+                if(propertyId===$scope.currentForm[i].id){
+                    $scope.currentForm[i].value = user.id;
+                    $scope.currentForm[i].selectedUserName = user.firstName+" "+user.lastName;
+                }
+            }
+        }
+
+        /*EXECUTE TASK*/
         $scope.complete = function(){
             //complete task
             var o = transform();
@@ -83,13 +130,22 @@
                 });
         }
 
+        /*CLAIM TASK*/
         $scope.claim = function(){
+            alert($scope.currentTaskId);
+            TaskService.claim(
+            $scope.currentTaskId,
+            function(res){
+                getTasks();
+            },
+            function(res){
 
-            alert('todo');
+            }
+            );
 
         }
 
-        //util function
+        //util
         var transform = function(){
             var obj = {}
             obj.id=$scope.currentTaskId+"";

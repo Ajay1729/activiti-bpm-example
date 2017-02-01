@@ -10,57 +10,86 @@
     function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams) {
 
         $scope.type = $stateParams.type; // my or instances
-        $scope.processes = []; //  list
-        $scope.currentForm = []; // current selected statprocess form
-        $scope.currentProcessKey; // current selected process id
-        $scope.processInstances=[];
+
+        $scope.processes = [];      // list of process def that user can start
+        $scope.currentForm = [];    // start form for current selected process def
+        $scope.currentProcessKey;   // current selected process def
+        $scope.processInstances=[]; // process instances for current selected process
+
 
         var getProcesses = function(){
 
-                //get process def that I can start
-                ProcessService.my(
-                    function(res){
-                        $scope.processes = res.data;
-                    },
-                    function(res){
-                    }
-                );
-                 $scope.currentForm = [];
-                 $scope.currentProcessKey = undefined;
+            //get process def that user can start
+            ProcessService.my(
+                function(res){
+                    $scope.processes = res.data;
+                },
+                function(res){
+                }
+            );
+
+            //reset
+            $scope.currentForm = [];
+            $scope.currentProcessKey = undefined;
 
         }
 
         getProcesses();
 
         $scope.showProcessDetail = function(processId){
-            $scope.currentProcessKey = processId;
-            ProcessService.getStartForm(
-                            processId,
-                            function(res){
-                                $scope.currentForm = res.data;
-                            },
-                            function(res){
 
+            //set currnet process id
+            $scope.currentProcessKey = processId;
+
+            //get start form
+            ProcessService.getStartForm(
+                processId,
+                function(res){
+                    $scope.currentForm = res.data;
+
+                    if($scope.currentForm.length!=0){
+                        for(var i=0; i<$scope.currentForm.length; i++){
+                            var id = $scope.currentForm[i].id
+                            if(id.includes("_groups_list_")){
+                                var idx = i;
+                                //$scope.currentForm[i].groupId = id.split("_group_member_")[0];
+                                var searchFor = id.split("_groups_list_")[0];
+                                $scope.currentForm[i].listId = id.split("_groups_list_")[0];
+                                //TODO - get list for id = '$scope.currentForm[i].listId'
+                                $scope.currentForm[idx].list = [];
                             }
+                        }
+                    }
+
+                },
+                function(res){
+
+                }
              );
 
         }
 
         $scope.showProcessInstances = function(processId){
-                    $scope.currentProcessKey = processId;
-                    ProcessService.instances(
-                                    processId,
-                                    function(res){
-                                        $scope.processInstances = res.data;
-                                    },
-                                    function(res){
 
-                                    }
-                     );
+                //set currnet process
+                $scope.currentProcessKey = processId;
 
-                }
+                //get process instances
+                ProcessService.instances(
+                    processId,
+                    function(res){
+                        $scope.processInstances = res.data;
+                    },
+                    function(res){
+
+                    }
+                 );
+
+        }
+
 
         $scope.start = function(){
+            //transform form params
             var o = transform();
             console.log(o);
             ProcessService.startProcess(
@@ -74,7 +103,7 @@
         }
 
 
-        //util function
+        //util
         var transform = function(){
             var obj = {}
             obj.id=$scope.currentProcessKey+"";

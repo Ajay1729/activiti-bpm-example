@@ -67,7 +67,7 @@ public class FormServiceWrapper {
     }
 
 
-    public boolean checkForm(ArrayList<FormProperty> properties, Map<String, String> params){
+    public boolean checkTaskForm(ArrayList<FormProperty> properties, Map<String, String> params){
 
         boolean canSubmit = true;
 

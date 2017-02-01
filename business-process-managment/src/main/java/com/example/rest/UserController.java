@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -39,7 +37,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity login(@RequestBody UserLogin userLogin){
 
-        Optional<User> user = identityServiceWrapper.getById(userLogin.getId());
+        Optional<User> user = identityServiceWrapper.getUserById(userLogin.getId());
 
         if(user.isPresent()){
             if(user.get().getPassword().equals(userLogin.getPassword())){
@@ -70,6 +68,21 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "/group/{id}")
+    public ResponseEntity usersByGroup(@PathVariable String id, final HttpServletRequest request) throws ServletException{
+        Optional<User> user = authService.getUserFromRequest(request);
+        if(user.isPresent()){
+            //HashMap<String, UserDTO> res = new HashMap<>();
+            //res.put("user", new UserDTO(user.get()));
+            ArrayList<UserDTO> responseList = new ArrayList<>();
+            ArrayList<User> users = identityServiceWrapper.getMembersOfGroup(id);
+            for(User user1:users){
+                responseList.add(new UserDTO(user1));
+            }
+            return new ResponseEntity<>(responseList, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
 
 }

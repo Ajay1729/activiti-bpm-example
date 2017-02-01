@@ -46,7 +46,7 @@ public class AuthService {
         String token = authHeader.substring(7); // The part after "Bearer "
         Claims claims = Jwts.parser().setSigningKey(JWTFilter.SECRET_KEY).parseClaimsJws(token).getBody();
         String id = (String) claims.get("sub"); //subject as setSubject(...)
-        return userService.getById(id);
+        return userService.getUserById(id);
 
     }
 

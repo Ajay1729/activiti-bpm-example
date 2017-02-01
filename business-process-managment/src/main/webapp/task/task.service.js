@@ -49,6 +49,26 @@
                     }
                 }
                 $http(req).then(onSuccess, onError);
+            },
+            usersByGroup:function(groupId, onSuccess, onError){
+                var req = {
+                    method: 'GET',
+                    url: '/api/user/group/'+groupId,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                $http(req).then(onSuccess, onError);
+            },
+            claim:function(taskId, onSuccess, onError){
+                var req = {
+                    method: 'GET',
+                    url: '/api/task/claim/'+taskId,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                $http(req).then(onSuccess, onError);
             }
         }
 

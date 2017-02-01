@@ -4,6 +4,8 @@ import com.example.interceptor.JWTFilter;
 import org.activiti.engine.*;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -14,10 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.example.constants.Constants.PROCESS_KEY_01;
 
 
 /***
@@ -41,15 +42,12 @@ import java.util.Map;
 @SpringBootApplication
 public class UppApplication {
 
-	//TODO - tabla gde svaka rola ima key procesa
-	public static final String PROCES_KEY = "process";
 
 	/* JWT FILTER */
 	@Bean
 	public FilterRegistrationBean jwtFilter() {
 		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 		registrationBean.setFilter(new JWTFilter());
-		// TODO add patterns as you go
 		registrationBean.addUrlPatterns("/api/task/*");
 		registrationBean.addUrlPatterns("/api/process/*");
 		return registrationBean;
@@ -77,67 +75,80 @@ public class UppApplication {
 
 				public void run(String... strings) throws Exception {
 
-					/*add variables*/
-					Map<String, Object> variables = new HashMap<String, Object>();
-					variables.put("new_property_2222", "THIS IS FIRST VAR BEFORE START");
-					variables.put("initiator", "admin");
+					boolean test = false;
+					if(test) {
 
-					/*get start form*/
-					List <ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCES_KEY).latestVersion().list();
-					System.out.println("PROCESSES "+PROCES_KEY+ ": "+runtimeService.createExecutionQuery().count());
-					for(ProcessDefinition pd: ls){
-						System.out.println(pd.getVersion());
+
+						/*add start form variables*/
+							Map<String, Object> variables = new HashMap<String, Object>();
+							variables.put("new_property_2222", "THIS IS FIRST VAR BEFORE START");
+							variables.put("initiator", "admin");
+
+						/*get start form*/
+							List<ProcessDefinition> ls = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_KEY_01).latestVersion().list();
+							System.out.println("PROCESSES " + PROCESS_KEY_01 + ": " + runtimeService.createExecutionQuery().count());
+							for (ProcessDefinition pd : ls) {
+								System.out.println(pd.getVersion());
+							}
+							ProcessDefinition processDef = ls.get(0);
+							//ProcessDefinition processDef = repositoryService.getProcessDefByProcessDefKey();
+							StartFormData startFormData = formService.getStartFormData(processDef.getId());
+							for (FormProperty formProperty : startFormData.getFormProperties()) {
+								System.out.println("NAME: " + formProperty.getName() + " ID: " + formProperty.getId() + " TYPE: " + formProperty.getType());
+							}
+
+						/*start proces*/
+							//runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
+							System.out.println("STARTED PROCESSES COUNT: " + runtimeService.createExecutionQuery().count());
+
+						/*get tasks*/
+							List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
+							System.out.println("number of assigned tasks: " + tasks.size());
+
+						/*display task form*/
+							ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formService.getTaskFormData(tasks.get(0).getId()).getFormProperties();
+							for (FormProperty property : properties) {
+								System.out.println("NAME: " + property.getName() + " ID: " + property.getId() + " TYPE: " + property.getType());
+							}
+
+
+						/*getting process instances*/
+							List<ProcessInstance> instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").list();
+							for (ProcessInstance pi : instances) {
+								//System.out.println(pi.getId());
+							}
+
+
+							// process startable groups
+							//******************************************************************//
+							//******************************************************************//
+							//getprocessdefbykey - then set that procesdef (latest) to user group - everytime process:1:4, process1:5....
+							repositoryService.addCandidateStarterGroup("process:1:4", "admins");
+							//******************************************************************//
+							//******************************************************************//
+							System.out.println("added startable group for proces def");
+							ArrayList<ProcessDefinition> def = (ArrayList<ProcessDefinition>) repositoryService.createProcessDefinitionQuery().startableByUser("admin").list();
+							System.out.println("getting process def startable by user");
+							for (ProcessDefinition pd : def) {
+								System.out.println("Id procesa " + pd.getId());
+								System.out.println("Key procesa " + pd.getKey());
+							}
+
+
+							ArrayList<User> users = (ArrayList<User>) identityService.createUserQuery().userId("admin").list();
+							if (users.size() != 0) {
+								System.out.print("IMA ADMINA" + Optional.of(users.get(0).getId()));
+							} else {
+								//return Optional.empty();
+							}
+
 					}
-					ProcessDefinition processDef = ls.get(0);
-					//ProcessDefinition processDef = repositoryService.getProcessDefByProcessDefKey();
-					StartFormData startFormData = formService.getStartFormData(processDef.getId());
-					for(FormProperty formProperty: startFormData.getFormProperties()){
-						System.out.println("NAME: "+formProperty.getName()+" ID: "+ formProperty.getId()+" TYPE: "+formProperty.getType());
-					}
 
-					/*start proces*/
-					//runtimeService.startProcessInstanceByKey(PROCES_KEY, variables);
-					System.out.println("STARTED PROCESSES COUNT: "+runtimeService.createExecutionQuery().count());
-
-					/*get tasks*/
-					List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
-					System.out.println("number of assigned tasks: "+tasks.size());
-
-					/*display task form*/
-					ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formService.getTaskFormData(tasks.get(0).getId()).getFormProperties();
-					for(FormProperty property: properties){
-						//todo field validation - is required, type
-						System.out.println("NAME: "+property.getName()+" ID: "+ property.getId()+" TYPE: "+property.getType());
-					}
-
-
-					/*getting process instances*/
-					List<ProcessInstance> instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("process").list();
-
-					for(ProcessInstance pi: instances){
-						//System.out.println(pi.getId());
-					}
-
-
-					// process startable groups
-					//******************************************************************//
-					repositoryService.addCandidateStarterGroup("process:1:4", "admins");
-					//******************************************************************//
-					System.out.println("added startable group for proces def");
-					ArrayList<ProcessDefinition> def = (ArrayList<ProcessDefinition>) repositoryService.createProcessDefinitionQuery().startableByUser("admin").list();
-					System.out.println("getting process def startable by user");
-					for(ProcessDefinition pd:def){
-						System.out.println("Id procesa "+pd.getId());
-						System.out.println("Key procesa "+pd.getKey());
-					}
 
 				}
 			};
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 }

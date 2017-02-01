@@ -19,28 +19,31 @@ public class IdentityServiceWrapper {
     @Autowired
     IdentityService identityService;
 
+
     public ArrayList<User> getAll(){
-
         return (ArrayList<User>) identityService.createUserQuery().list();
-
     }
 
-    //TODO [!] get users from certain group
 
+    public ArrayList<User> getMembersOfGroup(String groupId){
+        return (ArrayList<User>) identityService.createUserQuery().memberOfGroup(groupId).list();
+    }
 
+    public String getUserInfo(String userId, String key){
+        return identityService.getUserInfo(userId, key);
+    }
 
     public List<Group> getUsersGroups(String userId){
         return identityService.createGroupQuery().groupMember(userId).list();
     }
 
-
-    public Optional<User> getById(String id){
-        ArrayList<User> users =  getAll();
-        for(User user : users){
-            if(user.getId().equals(id))
-                return Optional.of(user);
+    public Optional<User> getUserById(String userId){
+        ArrayList<User> users = (ArrayList<User>) identityService.createUserQuery().userId(userId).list();
+        if(users.size()!=0){
+            return Optional.of(users.get(0));
+        }else {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
 

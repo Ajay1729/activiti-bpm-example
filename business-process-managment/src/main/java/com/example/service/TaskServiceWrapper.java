@@ -60,7 +60,7 @@ public class TaskServiceWrapper {
     public void executeTask(String taskId, String userId, Map<String, String> params){
         if(canExecute(taskId, userId)){
             ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getTaskFormData(taskId);
-            boolean canSubmit = formServiceWrapper.checkForm(properties, params);
+            boolean canSubmit = formServiceWrapper.checkTaskForm(properties, params);
             if(canSubmit){
                 formServiceWrapper.submitTaskFormData(taskId, params);
             }
