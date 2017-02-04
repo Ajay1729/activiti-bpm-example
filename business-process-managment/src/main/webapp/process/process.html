@@ -62,12 +62,12 @@
 
                         <!--input field-->
                         <!--TEXT FIELD-->
-                        <td ng-if="property.type.name!='boolean'">
+                        <td ng-if="property.type.name!='boolean' && !property.listId">
                             <input type="text" class="form-control" placeholder="Enter here..." ng-model="property.value">
                         </td>
 
                         <!--CHECK BOX-->
-                        <td ng-if="property.type.name=='boolean'">
+                        <td ng-if="property.type.name=='boolean' && !property.listId">
                             <form action="">
                                 <input type="radio" ng-model="property.value" value="true">Yes
                                 <input type="radio" ng-model="property.value" value="false">No
@@ -75,8 +75,17 @@
                         </td>
 
                         <!--DROPDOWN MENU-->
-
-
+                        <td ng-if="property.listId">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    {{property.selectedItemName}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li ng-repeat="item in property.list track by $index"><a ng-click="itemSelected(property.id, item)">{{item.name}}</a></li>
+                                </ul>
+                            </div>
+                        </td>
 
                     </tr>
                     </tbody>

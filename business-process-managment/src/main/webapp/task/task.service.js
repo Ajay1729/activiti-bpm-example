@@ -50,7 +50,7 @@
                 }
                 $http(req).then(onSuccess, onError);
             },
-            usersByGroup:function(groupId, onSuccess, onError){
+            getGroupMembers:function(groupId, onSuccess, onError){
                 var req = {
                     method: 'GET',
                     url: '/api/user/group/'+groupId,

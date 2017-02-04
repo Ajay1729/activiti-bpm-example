@@ -3,7 +3,7 @@
 
     angular
         .module('bpm_app',
-                ['ui.router', 'LocalStorageModule'])
+                ['ui.router'])
         .run(run);
 
 

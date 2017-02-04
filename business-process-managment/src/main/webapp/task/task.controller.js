@@ -69,7 +69,7 @@
                             if(id.includes("_group_member_")){
                                 var idx = i;
                                 $scope.currentForm[i].groupId = id.split("_group_member_")[0];
-                                TaskService.usersByGroup(
+                                TaskService.getGroupMembers(
                                     $scope.currentForm[i].groupId,
                                     function(res){
                                         //$scope.currentForm[i].selectedUserName = "Pick User...";
@@ -84,14 +84,6 @@
                             }else
                             {
                                 $scope.currentForm[i].groupId = false;
-
-                                //test
-                                //$scope.currentForm[i].selectedUserName = "Pick User...";
-                                //$scope.currentForm[0].groupId="asdf";
-                                //$scope.currentForm[1].groupId="asdsasaf";
-                                //$scope.currentForm[0].members=[{firstName:"neko", id:1}];
-                                //$scope.currentForm[1].members=[{firstName:"nekosadsad", id:2}];
-
                             }
                         }
                     }
@@ -104,16 +96,7 @@
 
         }
 
-        //util
-        $scope.userSelected = function(propertyId, user){
-            //set value to user field
-            for(var i = 0; i<$scope.currentForm.length; i++){
-                if(propertyId===$scope.currentForm[i].id){
-                    $scope.currentForm[i].value = user.id;
-                    $scope.currentForm[i].selectedUserName = user.firstName+" "+user.lastName;
-                }
-            }
-        }
+
 
         /*EXECUTE TASK*/
         $scope.complete = function(){
@@ -145,6 +128,19 @@
 
         }
 
+
+        //util
+        $scope.userSelected = function(propertyId, user){
+            //set value to user field
+            for(var i = 0; i<$scope.currentForm.length; i++){
+                if(propertyId===$scope.currentForm[i].id){
+                    $scope.currentForm[i].value = user.id;
+                    $scope.currentForm[i].selectedUserName = user.firstName+" "+user.lastName;
+                }
+            }
+        }
+
+
         //util
         var transform = function(){
             var obj = {}
@@ -159,6 +155,9 @@
             return obj;
         }
 
+        var checkIfPropertyIsDropdown(property){
+
+        }
 
         //////////////////////////////////////////////////
         //          formProperties example              //

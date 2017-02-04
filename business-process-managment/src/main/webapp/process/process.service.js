@@ -48,7 +48,7 @@
                         'Content-Type': 'application/json',
                     }
                 }
-             $http(req).then(onSuccess, onError);
+                $http(req).then(onSuccess, onError);
             }
         }
 

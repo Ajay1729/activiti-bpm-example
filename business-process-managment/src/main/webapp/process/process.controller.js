@@ -16,6 +16,36 @@
         $scope.currentProcessKey;   // current selected process def
         $scope.processInstances=[]; // process instances for current selected process
 
+        var faxList = [
+            {
+                name:"Katedra za informatiku",
+                id:"katedra_za_informatiku",
+                list:[
+                    {
+                    name:"E1",
+                    id:"stud_program_e1"
+                    },
+                    {
+                    name:"E2",
+                    id:"stud_program_e2"
+                    }
+                ]
+            },
+            {
+            name:"Katedra za mehaniku",
+            id:"katedra_za_mehaniku",
+            list:[
+                {
+                name:"x",
+                id:"stud_program_e1"
+                },
+                {
+                name:"y",
+                id:"stud_program_e2"
+                }
+            ]
+            }
+        ];
 
         var getProcesses = function(){
 
@@ -45,25 +75,32 @@
             ProcessService.getStartForm(
                 processId,
                 function(res){
+
                     $scope.currentForm = res.data;
 
+                    //dropdown
                     if($scope.currentForm.length!=0){
                         for(var i=0; i<$scope.currentForm.length; i++){
                             var id = $scope.currentForm[i].id
                             if(id.includes("_groups_list_")){
                                 var idx = i;
-                                //$scope.currentForm[i].groupId = id.split("_group_member_")[0];
                                 var searchFor = id.split("_groups_list_")[0];
                                 $scope.currentForm[i].listId = id.split("_groups_list_")[0];
-                                //TODO - get list for id = '$scope.currentForm[i].listId'
-                                $scope.currentForm[idx].list = [];
+                                if($scope.currentForm[i].listId=="list1"){
+                                    $scope.currentForm[idx].list = faxList;
+                                }else{
+                                    var tmp = [];
+                                    for(var g=0; g<faxList.length; g++){
+                                        tmp = tmp.concat(faxList[g].list);
+                                    }
+                                    $scope.currentForm[idx].list = tmp;
+                                }
                             }
                         }
                     }
-
                 },
                 function(res){
-
+                    //fail
                 }
              );
 
@@ -104,6 +141,17 @@
 
 
         //util
+        $scope.itemSelected = function(propertyId, item){
+            //set value to user field
+            for(var i = 0; i<$scope.currentForm.length; i++){
+                if(propertyId===$scope.currentForm[i].id){
+                    $scope.currentForm[i].value = item.id;
+                    $scope.currentForm[i].selectedItemName = item.name;
+                }
+            }
+        }
+
+        //util
         var transform = function(){
             var obj = {}
             obj.id=$scope.currentProcessKey+"";
@@ -115,6 +163,11 @@
                 obj.formProperties.push(tmp);
             }
             return obj;
+        }
+
+        //util
+        var checkIfPropertyIsDropbox(property){
+
         }
 
 
