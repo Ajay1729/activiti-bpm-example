@@ -1,6 +1,6 @@
 package com.example.rest;
 
-import com.example.dto.ExecutionDTO;
+import com.example.dto.ExecutionDto;
 import com.example.service.AuthService;
 import com.example.service.FormServiceWrapper;
 import com.example.service.RepositoryServiceWrapper;
@@ -54,6 +54,7 @@ public class ProcessController {
             ArrayList<Map<String, String>> customStartable = new ArrayList<>();
             for(ProcessDefinition processDefinition: startable) {
                 Map<String, String> map = new HashMap<>();
+                map.put("id", processDefinition.getId());
                 map.put("key", processDefinition.getKey());
                 map.put("name", processDefinition.getName());
                 map.put("description", processDefinition.getDescription());
@@ -68,7 +69,7 @@ public class ProcessController {
 
     /**
      * Returns start form
-     * params: process def key
+     * params: process def id
      * */
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
@@ -85,12 +86,12 @@ public class ProcessController {
 
     /**
      * Start process definition
-     * params: process def key & start form params
+     * params: process def id & start form params
      * */
     @RequestMapping(value = "/start",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity execute(@RequestBody ExecutionDTO data, final HttpServletRequest request)throws ServletException {
+    public ResponseEntity execute(@RequestBody ExecutionDto data, final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
             Map<String, Object> params = formServiceWrapper.makeStartFormParams(data);
@@ -104,7 +105,7 @@ public class ProcessController {
 
     /**
      * Returns process instances
-     * params: process def key
+     * params: process def id
      * */
     @RequestMapping(value = "/instances/{id}",
             method = RequestMethod.GET,

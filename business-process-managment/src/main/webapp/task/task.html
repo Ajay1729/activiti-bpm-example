@@ -21,13 +21,13 @@
                                 {{$index+1}}
                             </td>
                             <td>
-                                {{task.taskName}}
+                                {{task.name}}
                             </td>
                             <td>
-                                {{task.taskDescription}}
+                                {{task.description}}
                             </td>
                             <td>
-                                <button ng-click="showTaskDetail(task.taskId)" class="btn btn-primary btn-sm">
+                                <button ng-click="showTaskDetail(task.id)" class="btn btn-primary btn-sm">
                                     <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
                                 </button>
                             </td>
@@ -58,7 +58,7 @@
 
                         <!--input field -->
                         <!--TEXT FIELD-->
-                        <td ng-if="property.type.name!='boolean' && !property.groupId">
+                        <td ng-if="property.type.name=='string' && !property.groupId">
                             <input type="text" class="form-control" placeholder="Enter here..." ng-model="property.value">
                         </td>
 
@@ -68,6 +68,15 @@
                                 <input type="radio" ng-model="property.value" value="true">Yes
                                 <input type="radio" ng-model="property.value" value="false">No
                             </form>
+                        </td>
+
+                        <!--ENUM-->
+                        <td ng-if="property.type.name=='enum' && !property.groupId">
+                            <div ng-repeat="enumObject in property.enumValues">
+                                <form action="">
+                                <input type="radio" name="radio1" value="{{enumObject.id}}" ng-model="property.value" /> {{enumObject.name}} <br>
+                                </form>
+                            </div>
                         </td>
 
                         <!--DROPDOWN MENU FOR PICKING USER-->
@@ -87,12 +96,14 @@
                     </tbody>
                 </table>
             </div>
+            <div ng-show="currentTaskId!=undefined">
             <button ng-if="type=='my'" class="btn btn-success" type="button" ng-click="complete()">
                 Complete Task
             </button>
             <button ng-if="type=='involved'" class="btn btn-success" type="button" ng-click="claim()">
                 Claim Task
             </button>
+            </div>
         </div>
 
     </div>

@@ -54,11 +54,18 @@ public class InitController {
 						/*USERS*/
             for(Integer i=0; i<100; i++){
                 user = identityService.newUser(i.toString());
-                user.setFirstName("First"+i.toString());
-                user.setLastName("Last"+i.toString());
+                user.setFirstName("FirstName_"+i.toString());
+                user.setLastName("LastName_"+i.toString());
                 user.setPassword("password");
                 identityService.saveUser(user);
             }
+
+            user = identityService.newUser("admin");
+            user.setFirstName("Adminko");
+            user.setLastName("Adminkovic");
+            user.setPassword("password");
+            identityService.saveUser(user);
+
 
 						/*GROUPS*/
 						/*STUDNTSKA SLUZBA - izvrsavaju neke random taskove */
@@ -207,6 +214,18 @@ public class InitController {
             identityService.createMembership("42", "nastavnici_van_fakulteta");
             identityService.createMembership("43", "nastavnici_van_fakulteta");
             identityService.createMembership("44", "nastavnici_van_fakulteta");
+
+                        /*MOGUCI MENTORI*/
+            group = identityService.newGroup("mentor");
+            group.setName("Mentor");
+            group.setType("assignment");
+            identityService.saveGroup(group);
+            identityService.createMembership("45", "mentor");
+            identityService.createMembership("46", "mentor");
+            identityService.createMembership("47", "mentor");
+            identityService.createMembership("48", "mentor");
+            identityService.createMembership("48", "mentor");
+
 
             //-------------------------------------------
 

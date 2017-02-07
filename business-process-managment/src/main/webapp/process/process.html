@@ -27,11 +27,11 @@
                             {{process.description}}
                         </td>
                         <td>
-                            <button ng-if="type=='my'" ng-click="showProcessDetail(process.key)" class="btn btn-primary btn-sm">
+                            <button ng-if="type=='my'" ng-click="showProcessDetail(process.id)" class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
                             </button>
 
-                            <button ng-if="type=='instances'" ng-click="showProcessInstances(process.key)" class="btn btn-primary btn-sm">
+                            <button ng-if="type=='instances'" ng-click="showProcessInstances(process.id)" class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;<span> </span>
                             </button>
                         </td>
@@ -91,9 +91,11 @@
                     </tbody>
                 </table>
             </div>
+            <div ng-show="currentProcessId!=undefined">
             <button class="btn btn-success" type="button" ng-click="start()">
                 Start Process
             </button>
+            </div>
         </div>
 
 

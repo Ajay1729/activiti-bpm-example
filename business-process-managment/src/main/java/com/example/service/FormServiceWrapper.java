@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.ExecutionDTO;
+import com.example.dto.ExecutionDto;
 import org.activiti.engine.FormService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
@@ -35,8 +35,8 @@ public class FormServiceWrapper {
     }
 
 
-    public List<FormProperty> getStartFormData(String processKey){
-        ProcessDefinition processDef = repositoryServiceWrapper.getProcessDefByProcessDefKey(processKey);
+    public List<FormProperty> getStartFormData(String processId){
+        ProcessDefinition processDef = repositoryServiceWrapper.getProcessDefById(processId);//repositoryServiceWrapper.getProcessDefByProcessDefKey(processKey);
         StartFormData startFormData = formService.getStartFormData(processDef.getId());
         List<FormProperty> formProperties = startFormData.getFormProperties();
         return formProperties;
@@ -50,17 +50,17 @@ public class FormServiceWrapper {
     }
 
 
-    public Map<String, String> makeTaskFormParams(ExecutionDTO executionDTO){
+    public Map<String, String> makeTaskFormParams(ExecutionDto executionDto){
         Map<String, String> result = new HashMap<>();
-        for(Map<String, String> map : executionDTO.getFormProperties()){
+        for(Map<String, String> map : executionDto.getFormProperties()){
             result.put(map.get("id"), map.get("value"));
         }
         return result;
     }
 
-    public Map<String, Object> makeStartFormParams(ExecutionDTO executionDTO){
+    public Map<String, Object> makeStartFormParams(ExecutionDto executionDto){
         Map<String, Object> result = new HashMap<>();
-        for(Map<String, String> map : executionDTO.getFormProperties()){
+        for(Map<String, String> map : executionDto.getFormProperties()){
             result.put(map.get("id"), map.get("value"));
         }
         return result;

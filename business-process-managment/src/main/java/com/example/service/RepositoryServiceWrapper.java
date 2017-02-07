@@ -25,6 +25,10 @@ public class RepositoryServiceWrapper {
         return ls.get(0);
     }
 
+    public ProcessDefinition getProcessDefById(String id){
+        return repositoryService.createProcessDefinitionQuery().processDefinitionId(id).list().get(0);
+    }
+
     public List<ProcessDefinition> getProcessDefStartableByUser(String userId){
         //--------------------------------------------------------------------
         //proces def key

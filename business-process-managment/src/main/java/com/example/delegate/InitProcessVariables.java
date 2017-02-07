@@ -18,20 +18,15 @@ import static com.example.constants.Constants.*;
  */
 public class InitProcessVariables implements JavaDelegate {
 
-//    @Autowired
-//    IdentityServiceWrapper identityServiceWrapper;
-//
-//    @Autowired
-//    RuntimeService runtimeService;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
-        System.out.println("DELEGATE EXECUTION WORKS");
-
         RuntimeService runtimeService = delegateExecution.getEngineServices().getRuntimeService();
         IdentityService identityService = delegateExecution.getEngineServices().getIdentityService();
-        runtimeService.setProcessInstanceName(delegateExecution.getProcessInstanceId(), delegateExecution.getVariable("doktorant_id").toString());
+        runtimeService.setProcessInstanceName(
+                                                delegateExecution.getProcessInstanceId(),
+                                                delegateExecution.getVariable("doktorant_id").toString());
 
         ArrayList<User> users = (ArrayList<User>) identityService.createUserQuery().list();
         for(User user:users){

@@ -6,10 +6,10 @@ import java.util.Map;
 /**
  * Created by aloha on 24-Jan-17.
  */
-public class ExecutionDTO {
+public class ExecutionDto {
 
     /**
-     * task id OR process key
+     * task id OR process id
      * */
     private String id;
 
@@ -23,9 +23,9 @@ public class ExecutionDTO {
     private ArrayList<Map<String, String>> formProperties;
 
 
-    public ExecutionDTO(){}
+    public ExecutionDto(){}
 
-    public ExecutionDTO(String id, ArrayList<Map<String, String>> formProperties) {
+    public ExecutionDto(String id, ArrayList<Map<String, String>> formProperties) {
         this.id = id;
         this.formProperties = formProperties;
     }

@@ -9,9 +9,9 @@
 
     function TaskController($scope, $state, AuthService, $rootScope, TaskService, $stateParams) {
 
-        $scope.type = $stateParams.type; // my or involved
+        $scope.type = $stateParams.type; // my or involved tasks
 
-        $scope.tasks = [];          // tasks list
+        $scope.tasks = [];          // all tasks list
         $scope.currentForm = [];    // task form for current selected task
         $scope.currentTaskId;       // current selected task id
 
@@ -19,23 +19,22 @@
         var getTasks = function(){
 
             if($scope.type==='my'){
-                //get my tasks
                 TaskService.my(
                     function(res){
                         $scope.tasks = res.data;
                     },
                     function(res){
+                        //error
                     }
                 );
             }else
             if($scope.type==='involved'){
-                //get tasks im involved in
                 TaskService.involved(
                     function(res){
                         $scope.tasks = res.data;
                     },
                     function(res){
-
+                        //error
                     }
                 );
             }
@@ -53,81 +52,49 @@
             //save current task id
             $scope.currentTaskId = taskId;
 
-            //get task form
             TaskService.getTaskForm(
                 taskId,
                 function(res){
-
-                    //form properties
                     $scope.currentForm = res.data;
-
-                    //add dropdown menu items for property if needed
-                    if($scope.currentForm.length!=0){
-                        for(var i=0; i<$scope.currentForm.length; i++){
-                            //dropdown id for form property template: '<groupId>_group_member_<formPropertyId>'
-                            var id = $scope.currentForm[i].id;
-                            if(id.includes("_group_member_")){
-                                var idx = i;
-                                $scope.currentForm[i].groupId = id.split("_group_member_")[0];
-                                TaskService.getGroupMembers(
-                                    $scope.currentForm[i].groupId,
-                                    function(res){
-                                        //$scope.currentForm[i].selectedUserName = "Pick User...";
-                                        $scope.currentForm[idx].members = [];
-                                        $scope.currentForm[idx].members=res.data;
-                                    },
-                                    function(res){
-
-                                    }
-                                );
-
-                            }else
-                            {
-                                $scope.currentForm[i].groupId = false;
-                            }
-                        }
+                    console.log(res.data);
+                    //add dropdown menu if needed
+                    for(var i=0; i<$scope.currentForm.length; i++){
+                        checkIfPropertyIsDropdownForSelectingGroupMember(i);
                     }
                 },
                 function(res){
-
+                    //error
                 }
              );
 
-
         }
-
-
 
         /*EXECUTE TASK*/
         $scope.complete = function(){
-            //complete task
             var o = transform();
-            console.log(o);
             TaskService.completeTask(
                 o,
                 function(res){
                     getTasks();
                 },
                 function(res){
-
+                    //error
                 });
         }
 
         /*CLAIM TASK*/
         $scope.claim = function(){
-            alert($scope.currentTaskId);
             TaskService.claim(
-            $scope.currentTaskId,
-            function(res){
-                getTasks();
-            },
-            function(res){
-
-            }
+                $scope.currentTaskId,
+                function(res){
+                    getTasks();
+                },
+                function(res){
+                    //error
+                }
             );
 
         }
-
 
         //util
         $scope.userSelected = function(propertyId, user){
@@ -139,7 +106,6 @@
                 }
             }
         }
-
 
         //util
         var transform = function(){
@@ -155,43 +121,30 @@
             return obj;
         }
 
-        var checkIfPropertyIsDropdown(property){
-
+        //util
+        var checkIfPropertyIsDropdownForSelectingGroupMember = function(i){
+            //dropdown id template: '<groupId>_group_member_<formPropertyId>'
+            var TEMPLATE_DIVIDER = "_group_member_";
+            var id = $scope.currentForm[i].id;
+            if(id.includes(TEMPLATE_DIVIDER)){
+                var idx = i;
+                $scope.currentForm[i].groupId = id.split(TEMPLATE_DIVIDER)[0];
+                TaskService.getGroupMembers(
+                    $scope.currentForm[i].groupId,
+                    function(res){
+                        $scope.currentForm[idx].members = [];
+                        $scope.currentForm[idx].members=res.data;
+                    },
+                    function(res){
+                        //error
+                    }
+                );
+            }else
+            {
+                $scope.currentForm[i].groupId = false;
+            }
         }
 
-        //////////////////////////////////////////////////
-        //          formProperties example              //
-        //////////////////////////////////////////////////
-       /*
-        [
-          {
-            "id": "text",
-            "name": "TEXT",
-            "type": {
-              "name": "string",
-              "mimeType": "text/plain"
-            },
-            "value": null,
-            "readable": true,
-            "required": false,
-            "writable": true
-          },
-          {
-            "id": "new_property_1",
-            "name": "DA NE",
-            "type": {
-              "name": "boolean",
-              "mimeType": "plain/text"
-            },
-            "value": "true",
-            "readable": true,
-            "required": false,
-            "writable": true
-          }
-        ]
-        */
-
-        //////////////////////////////////////////////////
 
     }
 })();

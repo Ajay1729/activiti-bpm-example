@@ -1,6 +1,6 @@
 package com.example.rest;
 
-import com.example.dto.UserDTO;
+import com.example.dto.UserDto;
 import com.example.dto.UserLogin;
 import com.example.service.AuthService;
 import com.example.service.IdentityServiceWrapper;
@@ -60,8 +60,8 @@ public class UserController {
     public ResponseEntity me(final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            HashMap<String, UserDTO> res = new HashMap<>();
-            res.put("user", new UserDTO(user.get()));
+            HashMap<String, UserDto> res = new HashMap<>();
+            res.put("user", new UserDto(user.get()));
             return new ResponseEntity<>(res, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -72,12 +72,10 @@ public class UserController {
     public ResponseEntity usersByGroup(@PathVariable String id, final HttpServletRequest request) throws ServletException{
         Optional<User> user = authService.getUserFromRequest(request);
         if(user.isPresent()){
-            //HashMap<String, UserDTO> res = new HashMap<>();
-            //res.put("user", new UserDTO(user.get()));
-            ArrayList<UserDTO> responseList = new ArrayList<>();
+            ArrayList<UserDto> responseList = new ArrayList<>();
             ArrayList<User> users = identityServiceWrapper.getMembersOfGroup(id);
             for(User user1:users){
-                responseList.add(new UserDTO(user1));
+                responseList.add(new UserDto(user1));
             }
             return new ResponseEntity<>(responseList, HttpStatus.OK);
         }

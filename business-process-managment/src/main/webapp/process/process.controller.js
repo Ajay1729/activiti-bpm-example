@@ -9,11 +9,12 @@
 
     function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams) {
 
-        $scope.type = $stateParams.type; // my or instances
+        $scope.type = $stateParams.type; // my process def or my instances
 
-        $scope.processes = [];      // list of process def that user can start
+        $scope.processes = [];      // all process def that user can start
         $scope.currentForm = [];    // start form for current selected process def
-        $scope.currentProcessKey;   // current selected process def
+        $scope.currentProcessId;   // current selected process def
+
         $scope.processInstances=[]; // process instances for current selected process
 
         var faxList = [
@@ -49,18 +50,18 @@
 
         var getProcesses = function(){
 
-            //get process def that user can start
             ProcessService.my(
                 function(res){
                     $scope.processes = res.data;
                 },
                 function(res){
+                    //error
                 }
             );
 
-            //reset
+            //reset fields
             $scope.currentForm = [];
-            $scope.currentProcessKey = undefined;
+            $scope.currentProcessId = undefined;
 
         }
 
@@ -69,34 +70,16 @@
         $scope.showProcessDetail = function(processId){
 
             //set currnet process id
-            $scope.currentProcessKey = processId;
+            $scope.currentProcessId = processId;
 
-            //get start form
             ProcessService.getStartForm(
                 processId,
                 function(res){
-
                     $scope.currentForm = res.data;
-
-                    //dropdown
-                    if($scope.currentForm.length!=0){
-                        for(var i=0; i<$scope.currentForm.length; i++){
-                            var id = $scope.currentForm[i].id
-                            if(id.includes("_groups_list_")){
-                                var idx = i;
-                                var searchFor = id.split("_groups_list_")[0];
-                                $scope.currentForm[i].listId = id.split("_groups_list_")[0];
-                                if($scope.currentForm[i].listId=="list1"){
-                                    $scope.currentForm[idx].list = faxList;
-                                }else{
-                                    var tmp = [];
-                                    for(var g=0; g<faxList.length; g++){
-                                        tmp = tmp.concat(faxList[g].list);
-                                    }
-                                    $scope.currentForm[idx].list = tmp;
-                                }
-                            }
-                        }
+                    console.log(res.data);
+                    //add dropdown menu if needed
+                    for(var i=0; i<$scope.currentForm.length; i++){
+                        checkIfPropertyIsDropdownForSelectingListItem(i);
                     }
                 },
                 function(res){
@@ -108,19 +91,18 @@
 
         $scope.showProcessInstances = function(processId){
 
-                //set currnet process
-                $scope.currentProcessKey = processId;
+            //set currnet process
+            $scope.currentProcessId = processId;
 
-                //get process instances
-                ProcessService.instances(
-                    processId,
-                    function(res){
-                        $scope.processInstances = res.data;
-                    },
-                    function(res){
-
-                    }
-                 );
+            ProcessService.instances(
+                processId,
+                function(res){
+                    $scope.processInstances = res.data;
+                },
+                function(res){
+                    //error
+                }
+             );
 
         }
 
@@ -128,17 +110,15 @@
         $scope.start = function(){
             //transform form params
             var o = transform();
-            console.log(o);
             ProcessService.startProcess(
                 o,
                 function(res){
-
+                    //good
                 },
                 function(res){
-
+                    //error
                 });
         }
-
 
         //util
         $scope.itemSelected = function(propertyId, item){
@@ -154,7 +134,7 @@
         //util
         var transform = function(){
             var obj = {}
-            obj.id=$scope.currentProcessKey+"";
+            obj.id=$scope.currentProcessId+"";
             obj.formProperties=[];
             for(var i=0; i<$scope.currentForm.length; i++){
                 var tmp={};
@@ -166,44 +146,25 @@
         }
 
         //util
-        var checkIfPropertyIsDropbox(property){
-
+        var checkIfPropertyIsDropdownForSelectingListItem = function(i){
+            var TEMPLATE_DIVIDER = "_groups_list_";
+            var id = $scope.currentForm[i].id
+            if(id.includes(TEMPLATE_DIVIDER)){
+                var idx = i;
+                var searchFor = id.split(TEMPLATE_DIVIDER)[0];
+                $scope.currentForm[i].listId = id.split(TEMPLATE_DIVIDER)[0];
+                if($scope.currentForm[i].listId=="list1"){
+                    $scope.currentForm[idx].list = faxList;
+                }else{
+                    var tmp = [];
+                    for(var g=0; g<faxList.length; g++){
+                        tmp = tmp.concat(faxList[g].list);
+                    }
+                    $scope.currentForm[idx].list = tmp;
+                }
+            }
         }
 
-
-        //////////////////////////////////////////////////
-        //          formProperties example              //
-        //////////////////////////////////////////////////
-       /*
-        [
-          {
-            "id": "text",
-            "name": "TEXT",
-            "type": {
-              "name": "string",
-              "mimeType": "text/plain"
-            },
-            "value": null,
-            "readable": true,
-            "required": false,
-            "writable": true
-          },
-          {
-            "id": "new_property_1",
-            "name": "DA NE",
-            "type": {
-              "name": "boolean",
-              "mimeType": "plain/text"
-            },
-            "value": "true",
-            "readable": true,
-            "required": false,
-            "writable": true
-          }
-        ]
-        */
-
-        //////////////////////////////////////////////////
 
     }
 })();

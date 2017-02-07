@@ -36,28 +36,28 @@ public class RuntimeServiceWrapper {
     /**
      * Start process and set process initiator variable
      * */
-    public void startProcess(String processKey, String userId, Map<String, Object> params){
+    public void startProcess(String processId, String userId, Map<String, Object> params){
         params.put(INITIATOR, userId);
-        startProcess(processKey, params);
+        startProcess(processId, params);
     }
 
 
     /**
      * Start process without setting process initiator
      * */
-    public void startProcess(String processKey, Map<String, Object> params){
-        ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(processKey);
+    public void startProcess(String id, Map<String, Object> params){
+        ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(id);
         boolean canSubmit = formServiceWrapper.checkStartForm(properties, params);
         if(canSubmit){
-            runtimeService.startProcessInstanceByKey(processKey, params);
+            runtimeService.startProcessInstanceById(id, params);
         }
     }
 
 
-    public List<ProcessInstance> getProcessInstancesStartedByUser(String userId, String processDefKey){
+    public List<ProcessInstance> getProcessInstancesStartedByUser(String userId, String processDefId){
         // https://community.alfresco.com/thread/218889-start-process-instance-by-user
         ArrayList<ProcessInstance> retVal = new ArrayList<>();
-        ArrayList<ProcessInstance> all = (ArrayList<ProcessInstance>) runtimeService.createProcessInstanceQuery().processDefinitionKey(processDefKey).list();
+        ArrayList<ProcessInstance> all = (ArrayList<ProcessInstance>) runtimeService.createProcessInstanceQuery().processDefinitionId(processDefId).list();
         for(ProcessInstance instance:all){
             if(userId.equals(runtimeService.getVariable(instance.getProcessInstanceId(), "initiator"))){
                 retVal.add(instance);

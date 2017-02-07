@@ -5,7 +5,7 @@ import org.activiti.engine.identity.User;
 /**
  * Created by aloha on 22-Jan-17.
  */
-public class UserDTO {
+public class UserDto {
 
     String id;
     String role;
@@ -13,16 +13,16 @@ public class UserDTO {
     String lastName;
 
 
-    public UserDTO(){}
+    public UserDto(){}
 
-    public UserDTO(String id, String role, String firstName, String lastName) {
+    public UserDto(String id, String role, String firstName, String lastName) {
         this.id = id;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public UserDTO(User user){
+    public UserDto(User user){
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
