@@ -4,7 +4,13 @@
         <!--PROCESS DEFINITION LIST-->
         <div class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">My Processes</div>
-            <div class="table-responsive">
+
+            <div ng-show="processes.length==0" style="text-align: center" >
+                <h3><span><br><br>No Processes</span></h3>
+            </div>
+
+
+            <div ng-show="processes.length!=0" class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -41,10 +47,18 @@
             </div>
         </div>
 
+
         <!-- FORM - START FORM-->
         <div ng-if="type=='my'" class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">Start Form</div>
-            <div class="table-responsive">
+
+            <div style="text-align: center" >
+                <h3><span ng-show="currentForm.length==0 && currentProcessId!=undefined"><br><br>No Start Form</span></h3>
+                <h3><span ng-show="currentProcessId==undefined"><br><br>Select Process</span></h3>
+            </div>
+
+
+            <div ng-show="currentForm.length!=0" class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -91,7 +105,7 @@
                     </tbody>
                 </table>
             </div>
-            <div ng-show="currentProcessId!=undefined">
+            <div ng-show="currentProcessId!=undefined" style="text-align: center">
             <button class="btn btn-success" type="button" ng-click="start()">
                 Start Process
             </button>
@@ -102,7 +116,13 @@
         <!-- PROCESS INSTANCES-->
         <div ng-if="type=='instances'" class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">Process Instances</div>
-            <div class="table-responsive">
+
+            <div style="text-align: center" >
+                <h3><span ng-show="processInstances.length==0 && currentProcessId!=undefined"><br><br>No Process Instances</span></h3>
+                <h3><span ng-show="currentProcessId==undefined"><br><br>Select Process</span></h3>
+            </div>
+
+            <div ng-show="processInstances.length!=0" class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>

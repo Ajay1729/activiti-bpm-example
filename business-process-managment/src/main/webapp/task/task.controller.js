@@ -13,7 +13,7 @@
 
         $scope.tasks = [];          // all tasks list
         $scope.currentForm = [];    // task form for current selected task
-        $scope.currentTaskId;       // current selected task id
+        $scope.currentTaskId = undefined;       // current selected task id
 
 
         var getTasks = function(){
@@ -76,9 +76,11 @@
                 o,
                 function(res){
                     getTasks();
+                    alertify.success('Success!');
                 },
                 function(res){
                     //error
+                    alertify.error('Error!');
                 });
         }
 
@@ -88,9 +90,11 @@
                 $scope.currentTaskId,
                 function(res){
                     getTasks();
+                    alertify.success('Success!');
                 },
                 function(res){
                     //error
+                    alertify.error('Error!');
                 }
             );
 
@@ -134,6 +138,17 @@
                     function(res){
                         $scope.currentForm[idx].members = [];
                         $scope.currentForm[idx].members=res.data;
+                        if($scope.currentForm[idx].value){
+                            TaskService.getUserById(
+                            $scope.currentForm[idx].value,
+                            function(res){
+                                $scope.currentForm[idx].selectedUserName = res.data.firstName+" "+res.data.lastName;
+                            },
+                            function(res){
+                                //error
+                            }
+                            );
+                        }
                     },
                     function(res){
                         //error

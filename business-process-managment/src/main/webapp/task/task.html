@@ -5,7 +5,14 @@
         <!--TASK LIST-->
         <div class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">Tasks List</div>
-            <div class="table-responsive">
+
+            <div ng-show="tasks.length==0" style="text-align: center" >
+
+                <h3><span><br><br>No Tasks</span></h3>
+            </div>
+
+
+            <div class="table-responsive" ng-show="tasks.length!=0">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -40,7 +47,13 @@
         <!--TASK DETAIL-->
         <div class="col-md-6 col-md-offset-0">
             <div class="alert alert-success" role="alert">Task Form</div>
-            <div class="table-responsive">
+
+            <div style="text-align: center" >
+                <h3><span ng-show="currentForm.length==0 && currentTaskId!=undefined"><br><br>No Task Form</span></h3>
+                <h3><span ng-show="currentTaskId==undefined"> <br><br>Select Task</span></h3>
+            </div>
+
+            <div ng-show="currentForm.length!==0" class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -60,6 +73,11 @@
                         <!--TEXT FIELD-->
                         <td ng-if="property.type.name=='string' && !property.groupId">
                             <input type="text" class="form-control" placeholder="Enter here..." ng-model="property.value">
+                        </td>
+
+                        <!--NUMBER FIELD-->
+                        <td ng-if="property.type.name=='long' && !property.groupId">
+                            <input type="number" class="form-control" placeholder="Enter here..." ng-model="property.value">
                         </td>
 
                         <!--RADIO BUTTON-->
@@ -84,6 +102,7 @@
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     {{property.selectedUserName}}
+                                    {{property.firstName}}
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -96,7 +115,8 @@
                     </tbody>
                 </table>
             </div>
-            <div ng-show="currentTaskId!=undefined">
+            <div ng-show="currentTaskId!=undefined" style="text-align: center" >
+                <br>
             <button ng-if="type=='my'" class="btn btn-success" type="button" ng-click="complete()">
                 Complete Task
             </button>

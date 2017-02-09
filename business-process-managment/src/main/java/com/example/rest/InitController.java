@@ -43,13 +43,9 @@ public class InitController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity defaultInit(final HttpServletRequest request)throws ServletException {
-        Optional<User> user1 = authService.getUserFromRequest(request);
-        if(user1.isPresent()){
-
 
             User user = null;
             Group group = null;
-
 
 						/*USERS*/
             for(Integer i=0; i<100; i++){
@@ -224,16 +220,16 @@ public class InitController {
             identityService.createMembership("46", "mentor");
             identityService.createMembership("47", "mentor");
             identityService.createMembership("48", "mentor");
-            identityService.createMembership("48", "mentor");
 
 
             //-------------------------------------------
 
 
             return new ResponseEntity(HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+
+
 
 
 }

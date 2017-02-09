@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="doktorat" name="Doktorat" isExecutable="true">
+    <documentation>Proces doktoriranja</documentation>
     <startEvent id="sid-C7AB506D-9E95-4A7F-981F-49F8B0C6FE92" activiti:initiator="initiator">
       <extensionElements>
         <activiti:formProperty id="doktorant_id" name="Doktorant" type="string"></activiti:formProperty>
@@ -40,12 +41,12 @@ ${tema_doktorata}</documentation>
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
       <extensionElements>
+        <activiti:formProperty id="nastavnici_fakulteta_group_member_clan01" name="Clan 1" type="string" variable="nastavnici_fakulteta_group_member_clan01" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="nastavnici_fakulteta_group_member_clan02" name="Clan 2" type="string" variable="nastavnici_fakulteta_group_member_clan02" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="nastavnici_fakulteta_group_member_clan03" name="Clan 3" type="string" variable="nastavnici_fakulteta_group_member_clan03" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="nastavnici_fakulteta_group_member_clan04" name="Clan 4" type="string" variable="nastavnici_fakulteta_group_member_clan04" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="nastavnici_van_fakulteta_group_member_clan05" name="Clan 5" type="string" variable="nastavnici_van_fakulteta_group_member_clan05" writable="false"></activiti:formProperty>
         <activiti:formProperty id="odliuka_o_saglasnosti_o_sastavu_komisije" name="Sagnasnost za izabrani sastav komisije" type="boolean"></activiti:formProperty>
-        <activiti:formProperty id="new_property_1" type="string" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="new_property_2" type="string" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="new_property_3" type="string" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="new_property_4" type="string" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="new_property_5" type="string" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-9FE0D3D5-F0CF-46B1-BFA8-99DCD22F5677"></exclusiveGateway>
@@ -65,7 +66,7 @@ ${tema_doktorata}</documentation>
     <userTask id="sid-C3347974-C4FA-4D57-B280-67D3EE3A8E37" name="-Dostava izvestaja univerzitetu
 -Odlaganje izvestaja u arhiv
 -Dostava izvestaja doktorantu
--Dostava izvestaja vecu fakulteta" activiti:candidateGroups="${studentska_sluzba}">
+-Dostava izvestaja vecu fakulteta" activiti:candidateGroups="studentska_sluzba">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
     </userTask>
@@ -80,11 +81,11 @@ ${tema_doktorata}</documentation>
     </userTask>
     <exclusiveGateway id="sid-44400DFB-83AA-4412-A3D0-7DF96436C3E8"></exclusiveGateway>
     <endEvent id="sid-BBD8BDAA-7F37-4C05-9E54-2F6F2BC863D5"></endEvent>
-    <userTask id="sid-4AEEB6BF-643A-44CF-A48E-A0F9E90BE3B7" name="Slanje odluke veca fakulteta univerzitetu radi dobijanja saglasnosti" activiti:candidateGroups="${studentska_sluzba}">
+    <userTask id="sid-4AEEB6BF-643A-44CF-A48E-A0F9E90BE3B7" name="Slanje odluke veca fakulteta univerzitetu radi dobijanja saglasnosti" activiti:candidateGroups="studentska_sluzba">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
     </userTask>
-    <userTask id="sid-0DD448AD-720E-4D5D-B23E-3628F28BE10C" name="Odgovor univerziteta u vezi saglasnosi sa izvestajem" activiti:candidateGroups="${studentska_sluzba}">
+    <userTask id="sid-0DD448AD-720E-4D5D-B23E-3628F28BE10C" name="Odgovor univerziteta u vezi saglasnosi sa izvestajem" activiti:candidateGroups="studentska_sluzba">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
       <extensionElements>
@@ -96,7 +97,7 @@ ${tema_doktorata}</documentation>
     <endEvent id="sid-9FA346B5-9CFB-4EC0-97A8-BF9CEAD8E56A"></endEvent>
     <userTask id="sid-9FA7FFF9-6163-45F2-ADF3-9599DD35BC9B" name="-Odluka veca i saglasnost univerziteta se odlazu u dosije 
 -Jedan primerak se urucuje doktorantu
--Kandidatu se odobrava izrada doktorata" activiti:candidateGroups="${studentska_sluzba}">
+-Kandidatu se odobrava izrada doktorata" activiti:candidateGroups="studentska_sluzba">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
     </userTask>
@@ -108,12 +109,10 @@ ${tema_doktorata}</documentation>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-8969EC1F-0E03-424C-BEBF-D2C1F3AE520D" sourceRef="sid-2A46A48C-45BA-4E16-98FC-E410CEC9400C" targetRef="sid-C645BCCD-34FC-4529-B9E0-118FEDFEEF15"></sequenceFlow>
-    <sequenceFlow id="sid-29F8F886-5764-4ADA-89E1-563EF5D89FC4" sourceRef="sid-C645BCCD-34FC-4529-B9E0-118FEDFEEF15" targetRef="sid-B2F9FD90-CF0A-40FD-97F5-CAD021132CB6"></sequenceFlow>
     <userTask id="sid-775D26A3-F6F4-4D5E-80A1-95B5DC6DDB7A" name="Dostava  obrasca 'Predlog komisije za ocenu i odbranu doktorata' sefu katedre" activiti:assignee="${initiator}">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
     </userTask>
-    <parallelGateway id="sid-4271DD7C-2D9C-4675-8218-C70E5C8E682E"></parallelGateway>
     <userTask id="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B" name="Status istrazivanja" activiti:assignee="${initiator}">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
@@ -159,7 +158,7 @@ ${tema_doktorata}</documentation>
     <userTask id="sid-40E93BB4-A00C-4FAB-B810-CBD270E18359" name="-Priprema resenja za clanove komisije
 -Odlaganje odluke u dosije
 -Zahteva se
- od doktoranta da dostavi kopije" activiti:candidateGroups="${studentska_sluzba}">
+ od doktoranta da dostavi kopije" activiti:candidateGroups="studentska_sluzba">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
     </userTask>
@@ -185,7 +184,7 @@ ${tema_doktorata}</documentation>
     <userTask id="sid-D55F9F6E-EB1D-413A-890C-1CAFCC6CAE93" name="Sednica komisije  za ocenu i odbranu u vezi primedbi na doktorat
 -Sastavljanje izvestaja" activiti:assignee="${nastavnici_fakulteta_group_member_clan011}"></userTask>
     <sequenceFlow id="sid-9CA3CDBF-66F7-4650-96C2-D5548F0034A4" sourceRef="sid-F39E9965-5E8E-4EAD-9DB4-3036E95ECF7B" targetRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B"></sequenceFlow>
-    <sequenceFlow id="sid-C338872A-CA72-4B6D-BDBC-02F20B71573D" sourceRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B" targetRef="sid-4271DD7C-2D9C-4675-8218-C70E5C8E682E"></sequenceFlow>
+    <sequenceFlow id="sid-C338872A-CA72-4B6D-BDBC-02F20B71573D" sourceRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B" targetRef="sid-B2C644B9-AE1A-44D2-956F-44FCD73D1126"></sequenceFlow>
     <userTask id="sid-41357F9F-04B6-452F-95B1-D8C0599A577D" name="Vece fakulteta -  Odlika da li se primedbe uvazavaju" activiti:assignee="${sef_veca_fakulteta}">
       <extensionElements>
         <activiti:formProperty id="uvazenePrimedbeVariable" name="Status primedbi" type="enum">
@@ -195,8 +194,8 @@ ${tema_doktorata}</documentation>
         </activiti:formProperty>
       </extensionElements>
     </userTask>
-    <userTask id="sid-32967738-5552-45B6-BF1F-8EC5465C4D86" name="Slanje odluke o prihvatanju izvestaja univerzitetu radi  dobijanja saglasnosti" activiti:candidateGroups="${studentska_sluzba}"></userTask>
-    <userTask id="sid-D6B1E5D4-257D-4449-A2AC-18840FA67C50" name="Odluka univerziteta u vezi saglasnosti sa izvestajem" activiti:candidateGroups="${studentska_sluzba}">
+    <userTask id="sid-32967738-5552-45B6-BF1F-8EC5465C4D86" name="Slanje odluke o prihvatanju izvestaja univerzitetu radi  dobijanja saglasnosti" activiti:candidateGroups="studentska_sluzba"></userTask>
+    <userTask id="sid-D6B1E5D4-257D-4449-A2AC-18840FA67C50" name="Odluka univerziteta u vezi saglasnosti sa izvestajem" activiti:candidateGroups="studentska_sluzba">
       <extensionElements>
         <activiti:formProperty id="odluka_univerziteta_o_saglasnosti_sa_blabla" name="Odluka univerziteta" type="string"></activiti:formProperty>
       </extensionElements>
@@ -205,7 +204,7 @@ ${tema_doktorata}</documentation>
     <sequenceFlow id="sid-1B7FCB96-680C-4B5F-9433-389D3D359320" sourceRef="sid-D6B1E5D4-257D-4449-A2AC-18840FA67C50" targetRef="sid-12582CF7-A59B-4418-A236-96986D38D8D4"></sequenceFlow>
     <userTask id="sid-47BAD4FC-7335-4E52-A142-6EC3672834C9" name="-Odlaganje primerka u dosije doktoranta 
 -Urucivanje primerka doktorantu
-" activiti:candidateGroups="${studentska_sluzba}"></userTask>
+" activiti:candidateGroups="studentska_sluzba"></userTask>
     <endEvent id="sid-E849E53D-D12F-47F0-9F73-9B297FC396C8"></endEvent>
     <exclusiveGateway id="sid-B36505BC-7C89-47DD-B743-5D4FD8A8859B"></exclusiveGateway>
     <userTask id="sid-4C3F433D-3544-4AF9-99C2-05772EABB01B" name="Zakazivanje datuma  odbrane" activiti:assignee="${dekan}"></userTask>
@@ -239,8 +238,7 @@ ${tema_doktorata}</documentation>
     <sequenceFlow id="sid-FE264ABC-D902-4726-BEBD-083D04B2A438" sourceRef="sid-37CFC3F2-22B4-4A6F-9103-EA308D5D0F66" targetRef="sid-9FA7FFF9-6163-45F2-ADF3-9599DD35BC9B">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odgovor_univerziteta_u_vezi_odluke_veca_fakulteta==true}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="sid-9F0C7CDE-47CD-41CB-8BA6-428475F57A35" sourceRef="sid-9FA7FFF9-6163-45F2-ADF3-9599DD35BC9B" targetRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B"></sequenceFlow>
-    <userTask id="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA" name="Obavestava se vece fakulteta o obustavi  izrade doktorata" activiti:candidateGroups="${studentska_sluzba}">
+    <userTask id="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA" name="Obavestava se vece fakulteta o obustavi  izrade doktorata" activiti:candidateGroups="studentska_sluzba">
       <documentation>${doktorant_id}
 ${tema_doktorata}</documentation>
     </userTask>
@@ -263,9 +261,6 @@ ${tema_doktorata}</documentation>
     <sequenceFlow id="sid-17E01CBC-A4B4-469A-B2EE-2C2DC1AA7E86" sourceRef="sid-C54DF21B-7439-42A9-AF2A-113BE46F7A0A" targetRef="sid-526C416C-1EF1-4F0B-BC42-33325A0E5360"></sequenceFlow>
     <parallelGateway id="sid-811B2DFA-5629-42B5-AE60-2278BFB76459"></parallelGateway>
     <sequenceFlow id="sid-FE96DDD4-A6BF-4400-8264-226F3A34FFBB" sourceRef="sid-526C416C-1EF1-4F0B-BC42-33325A0E5360" targetRef="sid-811B2DFA-5629-42B5-AE60-2278BFB76459"></sequenceFlow>
-    <sequenceFlow id="sid-5C2748B4-B9AC-4F44-8DF2-899BED1CBC78" sourceRef="sid-9FE0D3D5-F0CF-46B1-BFA8-99DCD22F5677" targetRef="sid-811B2DFA-5629-42B5-AE60-2278BFB76459">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odliuka_o_saglasnosti_o_sastavu_komisije==true}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-8354040A-B8E4-4AC9-ABE6-9A2811367A78" sourceRef="sid-811B2DFA-5629-42B5-AE60-2278BFB76459" targetRef="sid-2E74B102-EC02-47CC-83F6-A68E41CC2A94"></sequenceFlow>
     <sequenceFlow id="sid-CF632247-61C3-4026-B6E3-0505A104C43C" sourceRef="sid-C3347974-C4FA-4D57-B280-67D3EE3A8E37" targetRef="sid-6BE3B0B4-5239-4B89-87C2-73B63B686415"></sequenceFlow>
     <sequenceFlow id="sid-6A3EC724-156C-4B7D-885A-D9E387EBCAFF" sourceRef="sid-2C1B5E3E-CAA1-48A9-B14A-69CA6E493714" targetRef="sid-7D36F5A1-2997-4A9E-ACFB-F8950612490F"></sequenceFlow>
@@ -277,12 +272,6 @@ ${tema_doktorata}</documentation>
     <exclusiveGateway id="sid-F865D13E-CF10-487E-B8C3-1619846DD982"></exclusiveGateway>
     <sequenceFlow id="sid-656BDB6C-C652-4E9F-9CB8-E11864EA9D13" sourceRef="sid-41357F9F-04B6-452F-95B1-D8C0599A577D" targetRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982"></sequenceFlow>
     <endEvent id="sid-73E7F7FC-9B2C-48BA-9BD3-74B19D293C65"></endEvent>
-    <sequenceFlow id="sid-EE58FDE5-5496-4364-A87F-39F40FF4E31E" sourceRef="sid-37CFC3F2-22B4-4A6F-9103-EA308D5D0F66" targetRef="sid-9FA346B5-9CFB-4EC0-97A8-BF9CEAD8E56A">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odgovor_univerziteta_u_vezi_odluke_veca_fakulteta==false}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-66466499-AA28-4594-897E-AAA4E6DA4522" name="Pozitivna ocena i nema primedbi" sourceRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B" targetRef="sid-ADE4EE48-3BB0-4C4E-BE37-EF981889C264">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${primedbe_status=false && ocena_disertacije>5}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-1682609A-87E6-4BAD-83C1-694C67B8E438" sourceRef="sid-32967738-5552-45B6-BF1F-8EC5465C4D86" targetRef="sid-D6B1E5D4-257D-4449-A2AC-18840FA67C50"></sequenceFlow>
     <userTask id="sid-ADE4EE48-3BB0-4C4E-BE37-EF981889C264" name="Vece fakulteta - odluka o prihvatanju izvestaja o oceni" activiti:assignee="${sef_veca_fakulteta}">
       <extensionElements>
@@ -293,22 +282,10 @@ ${tema_doktorata}</documentation>
     <sequenceFlow id="sid-DAD78778-315E-4CAE-B6F8-C543E1B35834" sourceRef="sid-ADE4EE48-3BB0-4C4E-BE37-EF981889C264" targetRef="sid-61F7A859-30D6-47CE-BD81-E372BF5B8800"></sequenceFlow>
     <endEvent id="sid-4ECB7E68-ABFD-439D-8C07-C9F8CBA0A57B"></endEvent>
     <sequenceFlow id="sid-3DE9F109-0CC6-433C-868D-71832279B6CE" sourceRef="sid-B36505BC-7C89-47DD-B743-5D4FD8A8859B" targetRef="sid-47BAD4FC-7335-4E52-A142-6EC3672834C9"></sequenceFlow>
-    <sequenceFlow id="sid-764A794F-5CFF-4636-AAFD-A14920891C7C" sourceRef="sid-12582CF7-A59B-4418-A236-96986D38D8D4" targetRef="sid-E849E53D-D12F-47F0-9F73-9B297FC396C8">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_univerziteta_o_saglasnosti_sa_blabla==false}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-21A36716-620D-464D-844C-F21F2A0646EB" sourceRef="sid-12582CF7-A59B-4418-A236-96986D38D8D4" targetRef="sid-B36505BC-7C89-47DD-B743-5D4FD8A8859B">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_univerziteta_o_saglasnosti_sa_blabla==true}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-75718EAD-8C5F-4630-9D9B-1BC357BFFB68" sourceRef="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B" targetRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B"></sequenceFlow>
-    <userTask id="sid-1C78148F-4599-4199-9128-F0BEAB181876" name="Objava odbrane na tabli fakulteta" activiti:candidateGroups="${studentska_sluzba}"></userTask>
+    <userTask id="sid-1C78148F-4599-4199-9128-F0BEAB181876" name="Objava odbrane na tabli fakulteta" activiti:candidateGroups="studentska_sluzba"></userTask>
     <sequenceFlow id="sid-B8CB1903-E00B-48A6-A5A6-CF8F523FE433" sourceRef="sid-4C3F433D-3544-4AF9-99C2-05772EABB01B" targetRef="sid-1C78148F-4599-4199-9128-F0BEAB181876"></sequenceFlow>
     <sequenceFlow id="sid-30FEDA70-3F64-448A-9952-82F1B6FA738D" sourceRef="sid-1C78148F-4599-4199-9128-F0BEAB181876" targetRef="sid-C9CC106B-BDD2-4FCB-A298-4C09C6A9DF7A"></sequenceFlow>
-    <sequenceFlow id="sid-692773FF-0A43-466A-BB9D-F836C6C74808" sourceRef="sid-8CD67F44-650F-4E15-BEF5-9366A2E25C94" targetRef="sid-56A6470B-258A-41E3-844A-C827D981A4A3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[$[odlaganje_odbrane==false}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-438B1C6F-7437-4AB1-A5BB-63E2C9784796" sourceRef="sid-8CD67F44-650F-4E15-BEF5-9366A2E25C94" targetRef="sid-044CB1DF-1388-4E15-B263-89F95706CFB9">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[$[odlaganje_odbrane==true}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-07B54411-D04A-4979-8237-E884C14E0CE4" sourceRef="sid-044CB1DF-1388-4E15-B263-89F95706CFB9" targetRef="sid-D47FF404-4F0D-4ECB-87A7-9D60459CE458"></sequenceFlow>
     <userTask id="sid-05C07D25-6E3E-4A10-835A-CFE6D80668D2" name="Vece katedre -  Predlaganje novog sastava komisije" activiti:assignee="${sef_veca_katedre}">
       <extensionElements>
@@ -330,32 +307,12 @@ ${tema_doktorata}</documentation>
     <serviceTask id="sid-F6F27049-9BDF-48B9-83FF-FBFFE7BD6468" name="Priprema" activiti:class="com.example.delegate.InitProcessVariables"></serviceTask>
     <sequenceFlow id="sid-107B81C1-4EB7-4188-BD2F-10CC4B7180B2" sourceRef="sid-C7AB506D-9E95-4A7F-981F-49F8B0C6FE92" targetRef="sid-F6F27049-9BDF-48B9-83FF-FBFFE7BD6468"></sequenceFlow>
     <sequenceFlow id="sid-F52FC0EA-9275-466A-BFF4-78E11ED9F25A" sourceRef="sid-F6F27049-9BDF-48B9-83FF-FBFFE7BD6468" targetRef="sid-2A46A48C-45BA-4E16-98FC-E410CEC9400C"></sequenceFlow>
-    <boundaryEvent id="sid-7F6B9B4F-D6EF-47F9-ADBF-24E4079FFA46" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT3M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
     <sequenceFlow id="sid-1B60E67C-6EBE-45E3-B197-691C3A3FBB6F" sourceRef="sid-9FE0D3D5-F0CF-46B1-BFA8-99DCD22F5677" targetRef="sid-B2F9FD90-CF0A-40FD-97F5-CAD021132CB6">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odliuka_o_saglasnosti_o_sastavu_komisije==false}]]></conditionExpression>
     </sequenceFlow>
-    <boundaryEvent id="sid-271BF15E-416B-4452-95DC-491E7392A8A8" attachedToRef="sid-F4E1EA13-51A0-4972-B7E4-6A6309708CE8" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT3M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
-    <boundaryEvent id="sid-5EFC328C-77D3-4535-9498-569610A17165" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT3M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
     <sequenceFlow id="sid-D416D038-2F57-473C-9449-95E6CFEA94C3" sourceRef="sid-44400DFB-83AA-4412-A3D0-7DF96436C3E8" targetRef="sid-4AEEB6BF-643A-44CF-A48E-A0F9E90BE3B7">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_o_prihvatanju_izvestaja_komisije==true}]]></conditionExpression>
     </sequenceFlow>
-    <boundaryEvent id="sid-1EE8FC89-62FE-482C-ACD5-325F9A312547" attachedToRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT3M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
     <sequenceFlow id="sid-F33BA680-B5DE-4C36-B5DB-D7FD0064AB60" sourceRef="sid-1EE8FC89-62FE-482C-ACD5-325F9A312547" targetRef="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA"></sequenceFlow>
     <userTask id="sid-E83E12BF-2AD3-44C0-AE37-8761F85507F0" name="Da li se istrazivanje produzava" activiti:assignee="${initiator}">
       <documentation>${doktorant_id}
@@ -364,14 +321,7 @@ ${tema_doktorata}</documentation>
         <activiti:formProperty id="produzenje_01" name="Da li se produzava izrada doktorata?" type="boolean"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="sid-E5E3DBB9-F03F-44A3-A014-1AC1F0B20FBE" sourceRef="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA" targetRef="sid-8AACCF43-E14D-4827-81AF-4DA91A0D0FFE"></sequenceFlow>
-    <sequenceFlow id="sid-CDD465BA-11E9-42AC-8080-2A6E89DFA327" sourceRef="sid-4271DD7C-2D9C-4675-8218-C70E5C8E682E" targetRef="sid-775D26A3-F6F4-4D5E-80A1-95B5DC6DDB7A">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status_istrazivanja==true}]]></conditionExpression>
-    </sequenceFlow>
     <exclusiveGateway id="sid-6CD9597A-DC4E-4832-96D5-7CC5520E018D"></exclusiveGateway>
-    <sequenceFlow id="sid-AE39CA74-3563-4FEE-AC99-4AF74F840B30" sourceRef="sid-4271DD7C-2D9C-4675-8218-C70E5C8E682E" targetRef="sid-E83E12BF-2AD3-44C0-AE37-8761F85507F0">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status_istrazivanja==false}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-1DCBA2AA-E588-48B9-A324-0815FE40837D" sourceRef="sid-E83E12BF-2AD3-44C0-AE37-8761F85507F0" targetRef="sid-6CD9597A-DC4E-4832-96D5-7CC5520E018D"></sequenceFlow>
     <sequenceFlow id="sid-F8206AB6-0858-4A48-9C8C-568061FD2657" sourceRef="sid-6CD9597A-DC4E-4832-96D5-7CC5520E018D" targetRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${produzenje_01==true}]]></conditionExpression>
@@ -379,60 +329,81 @@ ${tema_doktorata}</documentation>
     <sequenceFlow id="sid-E3D4ECEE-ED9C-4D88-AD7E-CB3CB93BAF22" sourceRef="sid-6CD9597A-DC4E-4832-96D5-7CC5520E018D" targetRef="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${produzenje_01==false}]]></conditionExpression>
     </sequenceFlow>
-    <boundaryEvent id="sid-B36B1540-CF87-43C1-9ED0-CD9E3185E43B" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT3M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
-    <boundaryEvent id="sid-3FA8768D-B421-4F37-B6ED-C38711377444" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT1M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
     <sequenceFlow id="sid-C132FBDC-0774-4B19-9D0D-482C193F9F99" sourceRef="sid-7D36F5A1-2997-4A9E-ACFB-F8950612490F" targetRef="sid-D227234F-25B0-4510-9C37-3740C251ED6A"></sequenceFlow>
-    <boundaryEvent id="sid-6BE3147D-7351-4FB3-B508-A971EC7B6CCA" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT6M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
     <sequenceFlow id="sid-DB31B56A-E064-4599-B169-56DB97C2784C" sourceRef="sid-BD48E5FB-995D-47BA-9ABF-23D6D6538762" targetRef="sid-A8AC0013-DBB7-45F2-9768-0F2F0C883FB9"></sequenceFlow>
-    <sequenceFlow id="sid-0108B2CF-D32B-490C-BEFB-E8CE0C0FF4BB" name="Negativna ocena komisije" sourceRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B" targetRef="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ocena_disertacije<=5}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-E3F26831-B115-4741-AA23-8A74E63C4B9F" name="Pozitivna ocena i ima primedbi" sourceRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B" targetRef="sid-D55F9F6E-EB1D-413A-890C-1CAFCC6CAE93">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${primedbe_status=true&& ocena_disertacije>5}]]></conditionExpression>
-    </sequenceFlow>
     <exclusiveGateway id="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B"></exclusiveGateway>
-    <boundaryEvent id="sid-677139A8-6E06-4E76-A880-31F29C5BFEC7" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT2M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
-    <sequenceFlow id="sid-9E0E3941-C113-4BE4-8352-FC6ED53A5F34" sourceRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982" targetRef="sid-ADE4EE48-3BB0-4C4E-BE37-EF981889C264">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${uvazenePrimedbeVariable=='uvazenePrimedbe001'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-85279789-72C3-4E3B-A5DF-7F14FA44D416" sourceRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982" targetRef="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${uvazenePrimedbeVariable=='uvazenePrimedbe002'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-53090D29-8494-42D4-9483-E496F8F51F95" sourceRef="sid-61F7A859-30D6-47CE-BD81-E372BF5B8800" targetRef="sid-4ECB7E68-ABFD-439D-8C07-C9F8CBA0A57B">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_o_prihvatanju_izvestaja_o_oceni==false}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-1E27CF27-A594-4111-ACDC-179D0F3FE02C" sourceRef="sid-61F7A859-30D6-47CE-BD81-E372BF5B8800" targetRef="sid-32967738-5552-45B6-BF1F-8EC5465C4D86"></sequenceFlow>
-    <boundaryEvent id="sid-CC51CEB2-3669-4998-A23E-FDAE977C224E" cancelActivity="true">
-      <timerEventDefinition>
-        <timeDuration>PT3M</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
     <sequenceFlow id="sid-069D4820-8FAA-4D3F-8A5A-17979D05C7AC" sourceRef="sid-A88D788B-D50F-4C8F-8D9F-08E87C8A5E20" targetRef="sid-D673F186-BF19-45FC-8E7A-8B08807FBAD2"></sequenceFlow>
-    <sequenceFlow id="sid-11C91D9E-48D5-4838-9B06-3FA5F74D83F3" sourceRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982" targetRef="sid-73E7F7FC-9B2C-48BA-9BD3-74B19D293C65">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${uvazenePrimedbeVariable=='uvazenePrimedbe003'}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="sid-515CC193-737C-471F-9C64-CBA799595526" sourceRef="sid-D47FF404-4F0D-4ECB-87A7-9D60459CE458" targetRef="sid-05C07D25-6E3E-4A10-835A-CFE6D80668D2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${vrsta_izmene=='izm01'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-9C6343B6-DA7F-4A98-ABD5-DBCEB7022F36" sourceRef="sid-D47FF404-4F0D-4ECB-87A7-9D60459CE458" targetRef="sid-4C3F433D-3544-4AF9-99C2-05772EABB01B">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${vrsta_izmene=='izm02'}]]></conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="sid-5C2748B4-B9AC-4F44-8DF2-899BED1CBC78" sourceRef="sid-9FE0D3D5-F0CF-46B1-BFA8-99DCD22F5677" targetRef="sid-811B2DFA-5629-42B5-AE60-2278BFB76459">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odliuka_o_saglasnosti_o_sastavu_komisije==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-EE58FDE5-5496-4364-A87F-39F40FF4E31E" sourceRef="sid-37CFC3F2-22B4-4A6F-9103-EA308D5D0F66" targetRef="sid-9FA346B5-9CFB-4EC0-97A8-BF9CEAD8E56A">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odgovor_univerziteta_u_vezi_odluke_veca_fakulteta==false}]]></conditionExpression>
+    </sequenceFlow>
+    <boundaryEvent id="sid-1EE8FC89-62FE-482C-ACD5-325F9A312547" attachedToRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B" cancelActivity="true">
+      <timerEventDefinition>
+        <timeDuration>PT3M</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <sequenceFlow id="sid-CDD465BA-11E9-42AC-8080-2A6E89DFA327" sourceRef="sid-B2C644B9-AE1A-44D2-956F-44FCD73D1126" targetRef="sid-775D26A3-F6F4-4D5E-80A1-95B5DC6DDB7A">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status_istrazivanja==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-AE39CA74-3563-4FEE-AC99-4AF74F840B30" sourceRef="sid-B2C644B9-AE1A-44D2-956F-44FCD73D1126" targetRef="sid-E83E12BF-2AD3-44C0-AE37-8761F85507F0">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status_istrazivanja==false}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="sid-B2C644B9-AE1A-44D2-956F-44FCD73D1126"></exclusiveGateway>
+    <sequenceFlow id="sid-66466499-AA28-4594-897E-AAA4E6DA4522" name="Pozitivna ocena i nema primedbi" sourceRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B" targetRef="sid-ADE4EE48-3BB0-4C4E-BE37-EF981889C264">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${primedbe_status==false && ocena_disertacije>5}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-53090D29-8494-42D4-9483-E496F8F51F95" sourceRef="sid-61F7A859-30D6-47CE-BD81-E372BF5B8800" targetRef="sid-4ECB7E68-ABFD-439D-8C07-C9F8CBA0A57B">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_o_prihvatanju_izvestaja_o_oceni==false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-1E27CF27-A594-4111-ACDC-179D0F3FE02C" sourceRef="sid-61F7A859-30D6-47CE-BD81-E372BF5B8800" targetRef="sid-32967738-5552-45B6-BF1F-8EC5465C4D86">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_o_prihvatanju_izvestaja_o_oceni==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-764A794F-5CFF-4636-AAFD-A14920891C7C" sourceRef="sid-12582CF7-A59B-4418-A236-96986D38D8D4" targetRef="sid-E849E53D-D12F-47F0-9F73-9B297FC396C8">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_univerziteta_o_saglasnosti_sa_blabla==false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-21A36716-620D-464D-844C-F21F2A0646EB" sourceRef="sid-12582CF7-A59B-4418-A236-96986D38D8D4" targetRef="sid-B36505BC-7C89-47DD-B743-5D4FD8A8859B">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${odluka_univerziteta_o_saglasnosti_sa_blabla==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-692773FF-0A43-466A-BB9D-F836C6C74808" sourceRef="sid-8CD67F44-650F-4E15-BEF5-9366A2E25C94" targetRef="sid-56A6470B-258A-41E3-844A-C827D981A4A3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[$[odlaganje_odbrane==false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-438B1C6F-7437-4AB1-A5BB-63E2C9784796" sourceRef="sid-8CD67F44-650F-4E15-BEF5-9366A2E25C94" targetRef="sid-044CB1DF-1388-4E15-B263-89F95706CFB9">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[$[odlaganje_odbrane==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-0108B2CF-D32B-490C-BEFB-E8CE0C0FF4BB" name="Negativna ocena komisije" sourceRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B" targetRef="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ocena_disertacije<=5}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-E3F26831-B115-4741-AA23-8A74E63C4B9F" name="Pozitivna ocena i ima primedbi" sourceRef="sid-7EFD98D4-258E-41EC-819C-EBB2836DDF1B" targetRef="sid-D55F9F6E-EB1D-413A-890C-1CAFCC6CAE93">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${primedbe_status==true && ocena_disertacije>5}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-85279789-72C3-4E3B-A5DF-7F14FA44D416" sourceRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982" targetRef="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${uvazenePrimedbeVariable=='uvazenePrimedbe002'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-11C91D9E-48D5-4838-9B06-3FA5F74D83F3" sourceRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982" targetRef="sid-73E7F7FC-9B2C-48BA-9BD3-74B19D293C65">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${uvazenePrimedbeVariable=='uvazenePrimedbe003'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-9E0E3941-C113-4BE4-8352-FC6ED53A5F34" sourceRef="sid-F865D13E-CF10-487E-B8C3-1619846DD982" targetRef="sid-ADE4EE48-3BB0-4C4E-BE37-EF981889C264">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${uvazenePrimedbeVariable=='uvazenePrimedbe001'}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="sid-B70243F2-0101-4663-86AC-33406B040C21" name="MailSender" activiti:class="com.example.delegate.SendingMail">
+      <extensionElements>
+        <activiti:field name="userIdExp">
+          <activiti:expression><![CDATA[${sef_veca_katedre}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sid-E5E3DBB9-F03F-44A3-A014-1AC1F0B20FBE" sourceRef="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA" targetRef="sid-8AACCF43-E14D-4827-81AF-4DA91A0D0FFE"></sequenceFlow>
+    <sequenceFlow id="sid-1B0D63DC-E75F-4FEC-8B11-3952B894E454" sourceRef="sid-9FA7FFF9-6163-45F2-ADF3-9599DD35BC9B" targetRef="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B"></sequenceFlow>
+    <sequenceFlow id="sid-29F8F886-5764-4ADA-89E1-563EF5D89FC4" sourceRef="sid-C645BCCD-34FC-4529-B9E0-118FEDFEEF15" targetRef="sid-B70243F2-0101-4663-86AC-33406B040C21"></sequenceFlow>
+    <sequenceFlow id="sid-C90EBDE1-04B3-4F45-BFF3-6EB344EC26B4" sourceRef="sid-B70243F2-0101-4663-86AC-33406B040C21" targetRef="sid-B2F9FD90-CF0A-40FD-97F5-CAD021132CB6"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_doktorat">
     <bpmndi:BPMNPlane bpmnElement="doktorat" id="BPMNPlane_doktorat">
@@ -496,11 +467,8 @@ ${tema_doktorata}</documentation>
       <bpmndi:BPMNShape bpmnElement="sid-775D26A3-F6F4-4D5E-80A1-95B5DC6DDB7A" id="BPMNShape_sid-775D26A3-F6F4-4D5E-80A1-95B5DC6DDB7A">
         <omgdc:Bounds height="80.0" width="99.99999999999989" x="385.56306604630953" y="490.7166295134848"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-4271DD7C-2D9C-4675-8218-C70E5C8E682E" id="BPMNShape_sid-4271DD7C-2D9C-4675-8218-C70E5C8E682E">
-        <omgdc:Bounds height="40.0" width="40.0" x="540.0" y="455.66544169109306"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B" id="BPMNShape_sid-2F04DC24-54FF-4DAC-837E-12AB54691A9B">
-        <omgdc:Bounds height="80.0" width="100.0" x="701.0237564478355" y="340.6089843649994"></omgdc:Bounds>
+        <omgdc:Bounds height="80.0" width="100.0" x="690.0" y="340.6089843649994"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-7D36F5A1-2997-4A9E-ACFB-F8950612490F" id="BPMNShape_sid-7D36F5A1-2997-4A9E-ACFB-F8950612490F">
         <omgdc:Bounds height="80.00000000000006" width="99.99999999999994" x="37.82613246785317" y="490.71662951348475"></omgdc:Bounds>
@@ -515,7 +483,7 @@ ${tema_doktorata}</documentation>
         <omgdc:Bounds height="80.0" width="99.99999999999994" x="216.67386753214686" y="632.5934214092233"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-7CC87011-F755-4EE6-A126-DB0FC6D82A14" id="BPMNShape_sid-7CC87011-F755-4EE6-A126-DB0FC6D82A14">
-        <omgdc:Bounds height="80.0" width="100.0" x="368.0374721351136" y="632.5934214092233"></omgdc:Bounds>
+        <omgdc:Bounds height="80.0" width="100.0" x="364.0254596118461" y="614.2929630949902"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-BD48E5FB-995D-47BA-9ABF-23D6D6538762" id="BPMNShape_sid-BD48E5FB-995D-47BA-9ABF-23D6D6538762">
         <omgdc:Bounds height="80.0" width="100.0" x="525.7678173358767" y="630.9213808030519"></omgdc:Bounds>
@@ -619,41 +587,23 @@ ${tema_doktorata}</documentation>
       <bpmndi:BPMNShape bpmnElement="sid-F6F27049-9BDF-48B9-83FF-FBFFE7BD6468" id="BPMNShape_sid-F6F27049-9BDF-48B9-83FF-FBFFE7BD6468">
         <omgdc:Bounds height="80.0" width="100.0" x="37.82613246785314" y="30.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-7F6B9B4F-D6EF-47F9-ADBF-24E4079FFA46" id="BPMNShape_sid-7F6B9B4F-D6EF-47F9-ADBF-24E4079FFA46">
-        <omgdc:Bounds height="31.0" width="31.0" x="545.9947753323848" y="136.92157406938972"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-271BF15E-416B-4452-95DC-491E7392A8A8" id="BPMNShape_sid-271BF15E-416B-4452-95DC-491E7392A8A8">
-        <omgdc:Bounds height="31.0" width="31.0" x="1524.8044095222656" y="185.35002638646458"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-5EFC328C-77D3-4535-9498-569610A17165" id="BPMNShape_sid-5EFC328C-77D3-4535-9498-569610A17165">
-        <omgdc:Bounds height="31.0" width="31.0" x="1761.6603247213982" y="431.2307737219569"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-1EE8FC89-62FE-482C-ACD5-325F9A312547" id="BPMNShape_sid-1EE8FC89-62FE-482C-ACD5-325F9A312547">
-        <omgdc:Bounds height="31.0" width="31.0" x="702.545507572741" y="324.52037036488315"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-E83E12BF-2AD3-44C0-AE37-8761F85507F0" id="BPMNShape_sid-E83E12BF-2AD3-44C0-AE37-8761F85507F0">
         <omgdc:Bounds height="80.0" width="100.0" x="390.0" y="380.7568661262291"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-6CD9597A-DC4E-4832-96D5-7CC5520E018D" id="BPMNShape_sid-6CD9597A-DC4E-4832-96D5-7CC5520E018D">
         <omgdc:Bounds height="40.0" width="40.0" x="525.0" y="360.60898436499946"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-B36B1540-CF87-43C1-9ED0-CD9E3185E43B" id="BPMNShape_sid-B36B1540-CF87-43C1-9ED0-CD9E3185E43B">
-        <omgdc:Bounds height="31.0" width="31.0" x="72.32613246785314" y="740.7407688427132"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-3FA8768D-B421-4F37-B6ED-C38711377444" id="BPMNShape_sid-3FA8768D-B421-4F37-B6ED-C38711377444">
-        <omgdc:Bounds height="31.0" width="31.0" x="231.53297306298197" y="431.2307737219569"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-6BE3147D-7351-4FB3-B508-A971EC7B6CCA" id="BPMNShape_sid-6BE3147D-7351-4FB3-B508-A971EC7B6CCA">
-        <omgdc:Bounds height="31.0" width="31.0" x="560.2678173358767" y="576.1317090998881"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B" id="BPMNShape_sid-167E75A1-F0FA-4AD7-9B1C-A1B4B3AA585B">
         <omgdc:Bounds height="40.00000000000006" width="40.0" x="1383.3494435168147" y="510.71662951348475"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-677139A8-6E06-4E76-A880-31F29C5BFEC7" id="BPMNShape_sid-677139A8-6E06-4E76-A880-31F29C5BFEC7">
-        <omgdc:Bounds height="31.0" width="31.0" x="1416.7249739860792" y="655.4213808030519"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="sid-1EE8FC89-62FE-482C-ACD5-325F9A312547" id="BPMNShape_sid-1EE8FC89-62FE-482C-ACD5-325F9A312547">
+        <omgdc:Bounds height="31.0" width="31.0" x="711.8489211852822" y="324.71352488260567"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-CC51CEB2-3669-4998-A23E-FDAE977C224E" id="BPMNShape_sid-CC51CEB2-3669-4998-A23E-FDAE977C224E">
-        <omgdc:Bounds height="31.0" width="31.0" x="1416.7249739860792" y="925.9259610533916"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="sid-B2C644B9-AE1A-44D2-956F-44FCD73D1126" id="BPMNShape_sid-B2C644B9-AE1A-44D2-956F-44FCD73D1126">
+        <omgdc:Bounds height="40.0" width="40.0" x="590.8190051582684" y="455.03182451480757"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-B70243F2-0101-4663-86AC-33406B040C21" id="BPMNShape_sid-B70243F2-0101-4663-86AC-33406B040C21">
+        <omgdc:Bounds height="80.0" width="100.0" x="420.0" y="135.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-4DF9C30B-ACEE-4CD2-9FDA-014828E95289" id="BPMNEdge_sid-4DF9C30B-ACEE-4CD2-9FDA-014828E95289">
         <omgdi:waypoint x="905.3498285855384" y="1068.8066233926572"></omgdi:waypoint>
@@ -671,9 +621,13 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="1566.1109437009497" y="876.668774362195"></omgdi:waypoint>
         <omgdi:waypoint x="1659.9123048279491" y="831.682332132853"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-1B0D63DC-E75F-4FEC-8B11-3952B894E454" id="BPMNEdge_sid-1B0D63DC-E75F-4FEC-8B11-3952B894E454">
+        <omgdi:waypoint x="917.3741791870816" y="380.6089843649994"></omgdi:waypoint>
+        <omgdi:waypoint x="790.0" y="380.6089843649994"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-29F8F886-5764-4ADA-89E1-563EF5D89FC4" id="BPMNEdge_sid-29F8F886-5764-4ADA-89E1-563EF5D89FC4">
-        <omgdi:waypoint x="441.67386753214686" y="70.0"></omgdi:waypoint>
-        <omgdi:waypoint x="510.0" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="425.0940913930668" y="110.0"></omgdi:waypoint>
+        <omgdi:waypoint x="445.9817313061418" y="135.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-264A9210-5C05-4D9A-B7EF-E1C2A68732B4" id="BPMNEdge_sid-264A9210-5C05-4D9A-B7EF-E1C2A68732B4">
         <omgdi:waypoint x="1433.2660705773253" y="241.73443626831005"></omgdi:waypoint>
@@ -690,6 +644,10 @@ ${tema_doktorata}</documentation>
       <bpmndi:BPMNEdge bpmnElement="sid-069D4820-8FAA-4D3F-8A5A-17979D05C7AC" id="BPMNEdge_sid-069D4820-8FAA-4D3F-8A5A-17979D05C7AC">
         <omgdi:waypoint x="495.0" y="1129.4557279062765"></omgdi:waypoint>
         <omgdi:waypoint x="408.6419870177972" y="1127.591616118255"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-C90EBDE1-04B3-4F45-BFF3-6EB344EC26B4" id="BPMNEdge_sid-C90EBDE1-04B3-4F45-BFF3-6EB344EC26B4">
+        <omgdi:waypoint x="504.2857142857143" y="135.0"></omgdi:waypoint>
+        <omgdi:waypoint x="525.7142857142857" y="110.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-F56E9CE4-8E5C-402A-BA5D-7261B8AB4F89" id="BPMNEdge_sid-F56E9CE4-8E5C-402A-BA5D-7261B8AB4F89">
         <omgdi:waypoint x="810.5461429399764" y="100.0"></omgdi:waypoint>
@@ -771,8 +729,8 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="1017.3741791870816" y="380.7978210059319"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-6036BEEA-C624-4195-990D-3D32ED9212F8" id="BPMNEdge_sid-6036BEEA-C624-4195-990D-3D32ED9212F8">
-        <omgdi:waypoint x="468.0374721351136" y="672.5934214092233"></omgdi:waypoint>
-        <omgdi:waypoint x="496.90264473549513" y="672.5934214092233"></omgdi:waypoint>
+        <omgdi:waypoint x="464.0254596118461" y="654.2929630949902"></omgdi:waypoint>
+        <omgdi:waypoint x="496.90264473549513" y="654.2929630949902"></omgdi:waypoint>
         <omgdi:waypoint x="496.90264473549513" y="670.9213808030519"></omgdi:waypoint>
         <omgdi:waypoint x="525.7678173358767" y="670.9213808030519"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -795,8 +753,8 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="1699.982609386001" y="734.7324465579944"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-F8206AB6-0858-4A48-9C8C-568061FD2657" id="BPMNEdge_sid-F8206AB6-0858-4A48-9C8C-568061FD2657">
-        <omgdi:waypoint x="564.5463360937513" y="381.0626482712482"></omgdi:waypoint>
-        <omgdi:waypoint x="701.0237564478355" y="380.7306248041977"></omgdi:waypoint>
+        <omgdi:waypoint x="564.5489690721649" y="381.0600152928345"></omgdi:waypoint>
+        <omgdi:waypoint x="690.0" y="380.73751906936957"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-F52FC0EA-9275-466A-BFF4-78E11ED9F25A" id="BPMNEdge_sid-F52FC0EA-9275-466A-BFF4-78E11ED9F25A">
         <omgdi:waypoint x="137.82613246785314" y="70.0"></omgdi:waypoint>
@@ -819,9 +777,9 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="600.0150597541999" y="710.9213808030519"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-75718EAD-8C5F-4630-9D9B-1BC357BFFB68" id="BPMNEdge_sid-75718EAD-8C5F-4630-9D9B-1BC357BFFB68">
-        <omgdi:waypoint x="1388.0564661385754" y="535.4236521352454"></omgdi:waypoint>
-        <omgdi:waypoint x="751.0237564478355" y="539.0185169922906"></omgdi:waypoint>
-        <omgdi:waypoint x="751.0237564478355" y="420.6089843649994"></omgdi:waypoint>
+        <omgdi:waypoint x="1388.0559036729255" y="535.4230896695956"></omgdi:waypoint>
+        <omgdi:waypoint x="740.0" y="539.0185169922906"></omgdi:waypoint>
+        <omgdi:waypoint x="740.0" y="420.6089843649994"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-438B1C6F-7437-4AB1-A5BB-63E2C9784796" id="BPMNEdge_sid-438B1C6F-7437-4AB1-A5BB-63E2C9784796">
         <omgdi:waypoint x="827.0237983937853" y="1064.8281237129977"></omgdi:waypoint>
@@ -844,8 +802,8 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="137.8261324678531" y="535.4411599812886"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-AE39CA74-3563-4FEE-AC99-4AF74F840B30" id="BPMNEdge_sid-AE39CA74-3563-4FEE-AC99-4AF74F840B30">
-        <omgdi:waypoint x="546.1146865388782" y="469.5507551522149"></omgdi:waypoint>
-        <omgdi:waypoint x="490.0" y="443.7479763191187"></omgdi:waypoint>
+        <omgdi:waypoint x="595.4065984231006" y="470.4442312499754"></omgdi:waypoint>
+        <omgdi:waypoint x="490.0" y="436.74311305136627"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-B941168C-236F-485C-8021-E53A7530648D" id="BPMNEdge_sid-B941168C-236F-485C-8021-E53A7530648D">
         <omgdi:waypoint x="1479.88474945968" y="1121.6514930889223"></omgdi:waypoint>
@@ -864,8 +822,8 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="736.0749442702272" y="670.9213808030519"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-C338872A-CA72-4B6D-BDBC-02F20B71573D" id="BPMNEdge_sid-C338872A-CA72-4B6D-BDBC-02F20B71573D">
-        <omgdi:waypoint x="701.0237564478355" y="405.4897790613521"></omgdi:waypoint>
-        <omgdi:waypoint x="573.3545591236722" y="469.02000081476524"></omgdi:waypoint>
+        <omgdi:waypoint x="690.7142135476156" y="420.6089843649994"></omgdi:waypoint>
+        <omgdi:waypoint x="627.6106093590716" y="471.8234287156108"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-B8FADE04-83C4-41AB-AA42-E124660F4924" id="BPMNEdge_sid-B8FADE04-83C4-41AB-AA42-E124660F4924">
         <omgdi:waypoint x="137.82613246785314" y="672.5934214092233"></omgdi:waypoint>
@@ -885,7 +843,9 @@ ${tema_doktorata}</documentation>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-3040B45C-A58A-47D0-B491-09673262184D" id="BPMNEdge_sid-3040B45C-A58A-47D0-B491-09673262184D">
         <omgdi:waypoint x="316.6738675321468" y="672.5934214092233"></omgdi:waypoint>
-        <omgdi:waypoint x="368.0374721351136" y="672.5934214092233"></omgdi:waypoint>
+        <omgdi:waypoint x="340.3496635719964" y="672.5934214092233"></omgdi:waypoint>
+        <omgdi:waypoint x="340.3496635719964" y="654.2929630949902"></omgdi:waypoint>
+        <omgdi:waypoint x="364.0254596118461" y="654.2929630949902"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-21A36716-620D-464D-844C-F21F2A0646EB" id="BPMNEdge_sid-21A36716-620D-464D-844C-F21F2A0646EB">
         <omgdi:waypoint x="1560.9526410117373" y="1071.0349479779723"></omgdi:waypoint>
@@ -898,8 +858,8 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="1532.093709641677" y="882.6515403029223"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-F33BA680-B5DE-4C36-B5DB-D7FD0064AB60" id="BPMNEdge_sid-F33BA680-B5DE-4C36-B5DB-D7FD0064AB60">
-        <omgdi:waypoint x="705.2823452723552" y="331.5711510808548"></omgdi:waypoint>
-        <omgdi:waypoint x="660.8190051582684" y="301.5698458288094"></omgdi:waypoint>
+        <omgdi:waypoint x="714.2672538954716" y="332.25549239100985"></omgdi:waypoint>
+        <omgdi:waypoint x="660.8190051582684" y="298.97040192370616"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-17E01CBC-A4B4-469A-B2EE-2C2DC1AA7E86" id="BPMNEdge_sid-17E01CBC-A4B4-469A-B2EE-2C2DC1AA7E86">
         <omgdi:waypoint x="679.9585994143885" y="162.66960181305302"></omgdi:waypoint>
@@ -922,8 +882,8 @@ ${tema_doktorata}</documentation>
         <omgdi:waypoint x="1161.5983799418445" y="100.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-CDD465BA-11E9-42AC-8080-2A6E89DFA327" id="BPMNEdge_sid-CDD465BA-11E9-42AC-8080-2A6E89DFA327">
-        <omgdi:waypoint x="546.5785290171398" y="482.24397070823284"></omgdi:waypoint>
-        <omgdi:waypoint x="485.5630660463094" y="508.88513977858713"></omgdi:waypoint>
+        <omgdi:waypoint x="596.0981362909056" y="480.31095564744476"></omgdi:waypoint>
+        <omgdi:waypoint x="485.5630660463094" y="515.0173577626953"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-CF632247-61C3-4026-B6E3-0505A104C43C" id="BPMNEdge_sid-CF632247-61C3-4026-B6E3-0505A104C43C">
         <omgdi:waypoint x="1771.3645131784815" y="281.73443626831"></omgdi:waypoint>
@@ -942,10 +902,6 @@ ${tema_doktorata}</documentation>
       <bpmndi:BPMNEdge bpmnElement="sid-1DCBA2AA-E588-48B9-A324-0815FE40837D" id="BPMNEdge_sid-1DCBA2AA-E588-48B9-A324-0815FE40837D">
         <omgdi:waypoint x="490.0" y="401.63882719231026"></omgdi:waypoint>
         <omgdi:waypoint x="530.5319969225969" y="386.14098128759645"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-9F0C7CDE-47CD-41CB-8BA6-428475F57A35" id="BPMNEdge_sid-9F0C7CDE-47CD-41CB-8BA6-428475F57A35">
-        <omgdi:waypoint x="917.3741791870816" y="380.60898436499934"></omgdi:waypoint>
-        <omgdi:waypoint x="801.0237564478355" y="380.6089843649994"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-873A6B92-949A-403A-B95F-CBCFD0107148" id="BPMNEdge_sid-873A6B92-949A-403A-B95F-CBCFD0107148">
         <omgdi:waypoint x="1643.0838127581285" y="391.1176053539273"></omgdi:waypoint>

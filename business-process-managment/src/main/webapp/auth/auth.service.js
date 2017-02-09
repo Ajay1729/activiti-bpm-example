@@ -22,7 +22,7 @@
             },
             me: function(onSuccess, onError){
                 var req = {
-                    method: 'POST',
+                    method: 'GET',
                     url: '/api/user/me',
                     headers: {
                         'Content-Type': 'application/json',

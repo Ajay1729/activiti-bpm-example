@@ -71,8 +71,18 @@ public class FormServiceWrapper {
 
         boolean canSubmit = true;
 
-        for(FormProperty property: properties){
+        //for(FormProperty property: properties){
+        for(int i=properties.size()-1; i>=0; i--){
+
             //todo field validation
+
+            FormProperty property = properties.get(i);
+            /*remove non writable fields to be submited*/
+            if(!property.isWritable()){
+                params.remove(property.getId());
+                properties.remove(i);
+                continue;
+            }
 
             /*is required*/
             if(property.isRequired()) {
@@ -85,8 +95,6 @@ public class FormServiceWrapper {
             }
 
             /*type check*/
-
-
         }
 
         return canSubmit;

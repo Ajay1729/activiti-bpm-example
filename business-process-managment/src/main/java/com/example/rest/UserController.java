@@ -1,7 +1,7 @@
 package com.example.rest;
 
 import com.example.dto.UserDto;
-import com.example.dto.UserLogin;
+import com.example.dto.UserLoginDto;
 import com.example.service.AuthService;
 import com.example.service.IdentityServiceWrapper;
 import org.activiti.engine.identity.User;
@@ -35,12 +35,12 @@ public class UserController {
     @RequestMapping(value = "/login",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity login(@RequestBody UserLogin userLogin){
+    public ResponseEntity login(@RequestBody UserLoginDto userLoginDto){
 
-        Optional<User> user = identityServiceWrapper.getUserById(userLogin.getId());
+        Optional<User> user = identityServiceWrapper.getUserById(userLoginDto.getId());
 
         if(user.isPresent()){
-            if(user.get().getPassword().equals(userLogin.getPassword())){
+            if(user.get().getPassword().equals(userLoginDto.getPassword())){
                 HashMap<String, String> responseObj = new HashMap<>();
                 responseObj.put("token", "Bearer "+authService.buildToken(user.get()));
                 return new ResponseEntity<>(responseObj, HttpStatus.OK);
@@ -55,7 +55,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/me",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity me(final HttpServletRequest request)throws ServletException {
         Optional<User> user = authService.getUserFromRequest(request);
@@ -81,6 +81,19 @@ public class UserController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+
+
+    @RequestMapping(value = "/user/{id}")
+    public ResponseEntity userById(@PathVariable String id, final HttpServletRequest request) throws ServletException{
+        Optional<User> user = authService.getUserFromRequest(request);
+        if(user.isPresent()){
+            Optional<User> user1 = identityServiceWrapper.getUserById(id);
+            return new ResponseEntity<>(user1.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
 
 
 }

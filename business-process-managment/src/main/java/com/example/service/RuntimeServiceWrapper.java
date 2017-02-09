@@ -21,6 +21,10 @@ import static com.example.constants.Constants.*;
 public class RuntimeServiceWrapper {
 
     @Autowired
+    MailService mailService;
+
+
+    @Autowired
     RuntimeService runtimeService;
 
     @Autowired
@@ -49,7 +53,7 @@ public class RuntimeServiceWrapper {
         ArrayList<FormProperty> properties = (ArrayList<FormProperty>) formServiceWrapper.getStartFormData(id);
         boolean canSubmit = formServiceWrapper.checkStartForm(properties, params);
         if(canSubmit){
-            runtimeService.startProcessInstanceById(id, params);
+            ProcessInstance pi = runtimeService.startProcessInstanceById(id, params);
         }
     }
 

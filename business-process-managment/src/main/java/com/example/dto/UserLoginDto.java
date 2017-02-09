@@ -3,14 +3,14 @@ package com.example.dto;
 /**
  * Created by aloha on 22-Jan-17.
  */
-public class UserLogin {
+public class UserLoginDto {
 
     String id;
     String password;
 
-    public UserLogin(){}
+    public UserLoginDto(){}
 
-    public UserLogin(String id, String password) {
+    public UserLoginDto(String id, String password) {
         this.id = id;
         this.password = password;
     }

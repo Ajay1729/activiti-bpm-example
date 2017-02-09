@@ -1,11 +1,16 @@
 package com.example;
 
 import com.example.interceptor.JWTFilter;
+import com.example.service.MailService;
 import org.activiti.engine.*;
+import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.activiti.engine.impl.delegate.DelegateInvocation;
+import org.activiti.engine.impl.interceptor.DelegateInterceptor;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -69,11 +74,15 @@ public class UppApplication {
 						   final RuntimeService runtimeService,
 						   final TaskService taskService,
 						   final FormService formService,
-						   final IdentityService identityService) {
+						   final IdentityService identityService,
+						   final MailService mailService,
+						   final ProcessEngine processEngine,
+						   final ProcessEngineConfigurationImpl processEngineConfiguration) {
 
 			return new CommandLineRunner() {
 
 				public void run(String... strings) throws Exception {
+
 
 					boolean test = false;
 					if(test) {

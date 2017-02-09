@@ -62,14 +62,68 @@
             },
             claim:function(taskId, onSuccess, onError){
                 var req = {
-                    method: 'GET',
+                    method: 'POST',
                     url: '/api/task/claim/'+taskId,
                     headers: {
                         'Content-Type': 'application/json',
                     }
                 }
                 $http(req).then(onSuccess, onError);
+            },
+            getUserById:function(userId, onSuccess, onError){
+                var req = {
+                    method: 'GET',
+                    url: '/api/user/user/'+userId,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                $http(req).then(onSuccess, onError);
+            },
+            getList:function(listId){
+                var faxList = [
+                    {
+                        name:"Katedra za informatiku",
+                        id:"katedra_za_informatiku",
+                        list:[
+                            {
+                            name:"E1",
+                            id:"stud_program_e1"
+                            },
+                            {
+                            name:"E2",
+                            id:"stud_program_e2"
+                            }
+                        ]
+                    },
+                    {
+                    name:"Katedra za mehaniku",
+                    id:"katedra_za_mehaniku",
+                    list:[
+                        {
+                        name:"x",
+                        id:"stud_program_e1"
+                        },
+                        {
+                        name:"y",
+                        id:"stud_program_e2"
+                        }
+                    ]
+                    }
+                ];
+
+                if(listId=="list1"){
+                    return faxList;
+                }else
+                if(listId=='list2'){
+                    var tmp = [];
+                    for(var g=0; g<faxList.length; g++){
+                        tmp = tmp.concat(faxList[g].list);
+                    }
+                    return tmp;
+                }
             }
+
         }
 
    }

@@ -39,12 +39,12 @@ public class TaskServiceWrapper {
         }
 
         /*2 - group that user belongs is candidate*/
-        ArrayList<Group> groups = (ArrayList<Group>) identityServiceWrapper.getUsersGroups(userId);
-        for(Group group:groups){
-            for(Task task : taskService.createTaskQuery().taskCandidateGroup(group.getId()).list()){
-                tasks.add(task);
-            }
-        }
+//        ArrayList<Group> groups = (ArrayList<Group>) identityServiceWrapper.getUsersGroups(userId);
+//        for(Group group:groups){
+//            for(Task task : taskService.createTaskQuery().taskCandidateGroup(group.getId()).list()){
+//                tasks.add(task);
+//            }
+//        }
 
         return tasks;
     }

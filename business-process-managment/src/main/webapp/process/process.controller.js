@@ -5,9 +5,9 @@
         .module('bpm_app')
         .controller('ProcessController', ProcessController);
 
-    ProcessController.$inject = ['$scope', '$state', 'AuthService', '$rootScope', 'ProcessService', '$stateParams'];
+    ProcessController.$inject = ['$scope', '$state', 'AuthService', '$rootScope', 'ProcessService', '$stateParams', 'TaskService'];
 
-    function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams) {
+    function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams, TaskService) {
 
         $scope.type = $stateParams.type; // my process def or my instances
 
@@ -17,36 +17,6 @@
 
         $scope.processInstances=[]; // process instances for current selected process
 
-        var faxList = [
-            {
-                name:"Katedra za informatiku",
-                id:"katedra_za_informatiku",
-                list:[
-                    {
-                    name:"E1",
-                    id:"stud_program_e1"
-                    },
-                    {
-                    name:"E2",
-                    id:"stud_program_e2"
-                    }
-                ]
-            },
-            {
-            name:"Katedra za mehaniku",
-            id:"katedra_za_mehaniku",
-            list:[
-                {
-                name:"x",
-                id:"stud_program_e1"
-                },
-                {
-                name:"y",
-                id:"stud_program_e2"
-                }
-            ]
-            }
-        ];
 
         var getProcesses = function(){
 
@@ -113,7 +83,7 @@
             ProcessService.startProcess(
                 o,
                 function(res){
-                    //good
+                    alertify.success('Success!');
                 },
                 function(res){
                     //error
@@ -153,17 +123,12 @@
                 var idx = i;
                 var searchFor = id.split(TEMPLATE_DIVIDER)[0];
                 $scope.currentForm[i].listId = id.split(TEMPLATE_DIVIDER)[0];
-                if($scope.currentForm[i].listId=="list1"){
-                    $scope.currentForm[idx].list = faxList;
-                }else{
-                    var tmp = [];
-                    for(var g=0; g<faxList.length; g++){
-                        tmp = tmp.concat(faxList[g].list);
-                    }
-                    $scope.currentForm[idx].list = tmp;
-                }
+                $scope.currentForm[idx].list = TaskService.getList($scope.currentForm[i].listId);
             }
         }
+
+
+
 
 
     }

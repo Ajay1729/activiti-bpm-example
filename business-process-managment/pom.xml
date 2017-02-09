@@ -55,6 +55,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
+		<!--MAIL-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 		<!--JWT-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -70,6 +76,7 @@
 			<version>${activiti.version}</version>
 		</dependency>
 
+		<!--activiti dependencies-->
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-spring-boot-starter-rest-api</artifactId>
@@ -77,12 +84,14 @@
 			<version>${activiti.version}</version>
 		</dependency>
 
+		<!--activiti dependencies-->
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-spring-boot-starter-actuator</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
 
+		<!--activiti dependencies-->
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-spring-boot-starter-jpa</artifactId>
