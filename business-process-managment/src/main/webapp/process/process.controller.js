@@ -84,6 +84,9 @@
                 o,
                 function(res){
                     alertify.success('Success!');
+                     //reset fields
+                     $scope.currentForm = [];
+                     $scope.currentProcessId = undefined;
                 },
                 function(res){
                     //error

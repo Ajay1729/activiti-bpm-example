@@ -398,6 +398,12 @@ ${tema_doktorata}</documentation>
         <activiti:field name="userIdExp">
           <activiti:expression><![CDATA[${sef_veca_katedre}]]></activiti:expression>
         </activiti:field>
+        <activiti:field name="titleExp">
+          <activiti:string><![CDATA[Odrzavanje sednice]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="msgExp">
+          <activiti:string><![CDATA[Vas zadatak je da organizujete sednicu katedere povodom doktorata.]]></activiti:string>
+        </activiti:field>
       </extensionElements>
     </serviceTask>
     <sequenceFlow id="sid-E5E3DBB9-F03F-44A3-A014-1AC1F0B20FBE" sourceRef="sid-C99F01EB-5A3D-4D28-93D7-04DA7481F1EA" targetRef="sid-8AACCF43-E14D-4827-81AF-4DA91A0D0FFE"></sequenceFlow>

@@ -25,11 +25,17 @@ public class SendingMail implements JavaDelegate {
     //MailService mailService;
 
     Expression userIdExp;
+    Expression titleExp;
+    Expression msgExp;
+
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
         String userId = (String) userIdExp.getValue(delegateExecution);
+        String title = (String) titleExp.getValue(delegateExecution);
+        String msg = (String) msgExp.getValue(delegateExecution);
+
         System.out.println("SENDING MAIL TO USER WITH ID:" + userId);
 
         //------------------------------------------------------------------------
@@ -59,9 +65,9 @@ public class SendingMail implements JavaDelegate {
             message.setFrom(new InternetAddress("from@no-spam.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("radomir.aloha@gmail.com"));
-            message.setSubject("Nova aktivnost - Doktorat Proces");
-            message.setText("Proverite vase zadatke." +
-                    "\n\n Doktorat Proces");
+            message.setSubject(title);
+            message.setText(msg +
+                    "\n\n  ");
 
             Transport.send(message);
 
