@@ -10,12 +10,12 @@ angular
     function stateConfig($stateProvider, $urlRouterProvider) {
 
          $stateProvider
-           .state('process', {
-                   url: '/process/:type',
+           .state('task', {
+                   url: '/tasks/:type',
                    views: {
                        'content@': {
-                           templateUrl: 'process/process.html',
-                           controller: 'ProcessController'
+                           templateUrl: 'activiti-task/task.html',
+                           controller: 'TaskController'
                        },
                        'navbar':{
                            templateUrl: 'navbar/navbar.html',

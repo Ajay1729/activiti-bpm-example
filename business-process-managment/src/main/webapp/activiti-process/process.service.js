@@ -9,7 +9,7 @@
    function ProcessService($http){
 
         return{
-            my: function(onSuccess, onError){
+            myProcesses: function(onSuccess, onError){
                 var req = {
                     method: 'GET',
                     url: '/api/process/my',
@@ -40,7 +40,7 @@
                 }
              $http(req).then(onSuccess, onError);
             },
-            instances:function(id, onSuccess, onError){
+            processInstances:function(id, onSuccess, onError){
                 var req = {
                     method: 'GET',
                     url: '/api/process/instances/'+id,

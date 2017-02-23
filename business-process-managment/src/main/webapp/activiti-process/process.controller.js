@@ -5,9 +5,9 @@
         .module('bpm_app')
         .controller('ProcessController', ProcessController);
 
-    ProcessController.$inject = ['$scope', '$state', 'AuthService', '$rootScope', 'ProcessService', '$stateParams', 'TaskService'];
+    ProcessController.$inject = ['$scope', '$state', 'AuthService', '$rootScope', 'ProcessService', '$stateParams', 'TaskService', 'FormService'];
 
-    function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams, TaskService) {
+    function ProcessController($scope, $state, AuthService, $rootScope, ProcessService, $stateParams, TaskService, FormService) {
 
         $scope.type = $stateParams.type; // my process def or my instances
 
@@ -20,7 +20,7 @@
 
         var getProcesses = function(){
 
-            ProcessService.my(
+            ProcessService.myProcesses(
                 function(res){
                     $scope.processes = res.data;
                 },
@@ -64,7 +64,7 @@
             //set currnet process
             $scope.currentProcessId = processId;
 
-            ProcessService.instances(
+            ProcessService.processInstances(
                 processId,
                 function(res){
                     $scope.processInstances = res.data;
@@ -123,10 +123,10 @@
             var TEMPLATE_DIVIDER = "_groups_list_";
             var id = $scope.currentForm[i].id
             if(id.includes(TEMPLATE_DIVIDER)){
-                var idx = i;
+                //var idx = i;
                 var searchFor = id.split(TEMPLATE_DIVIDER)[0];
                 $scope.currentForm[i].listId = id.split(TEMPLATE_DIVIDER)[0];
-                $scope.currentForm[idx].list = TaskService.getList($scope.currentForm[i].listId);
+                $scope.currentForm[i].list = TaskService.getList($scope.currentForm[i].listId);
             }
         }
 

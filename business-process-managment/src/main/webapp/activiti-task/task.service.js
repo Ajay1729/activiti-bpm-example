@@ -9,7 +9,7 @@
    function TaskService($http){
 
         return{
-            my: function(onSuccess, onError){
+            myTasks: function(onSuccess, onError){
                 var req = {
                     method: 'GET',
                     url: '/api/task/mytasks',
@@ -40,7 +40,7 @@
                 }
              $http(req).then(onSuccess, onError);
             },
-            involved:function(onSuccess, onError){
+            involvedTasks:function(onSuccess, onError){
                 var req = {
                     method: 'GET',
                     url: '/api/task/involved',
@@ -60,7 +60,7 @@
                 }
                 $http(req).then(onSuccess, onError);
             },
-            claim:function(taskId, onSuccess, onError){
+            claimTask:function(taskId, onSuccess, onError){
                 var req = {
                     method: 'POST',
                     url: '/api/task/claim/'+taskId,
@@ -81,6 +81,8 @@
                 $http(req).then(onSuccess, onError);
             },
             getList:function(listId){
+
+                //hardcoded values - you can meke request to get this from DB...
                 var faxList = [
                     {
                         name:"Katedra za informatiku",
@@ -101,11 +103,11 @@
                     id:"katedra_za_mehaniku",
                     list:[
                         {
-                        name:"x",
+                        name:"todo1",
                         id:"stud_program_e1"
                         },
                         {
-                        name:"y",
+                        name:"todo2",
                         id:"stud_program_e2"
                         }
                     ]

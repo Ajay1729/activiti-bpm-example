@@ -5,9 +5,9 @@
         .module('bpm_app')
         .controller('TaskController', TaskController);
 
-    TaskController.$inject = ['$scope', '$state', 'AuthService', '$rootScope', 'TaskService', '$stateParams'];
+    TaskController.$inject = ['$scope', '$state', 'AuthService', '$rootScope', 'TaskService', '$stateParams', 'FormService'];
 
-    function TaskController($scope, $state, AuthService, $rootScope, TaskService, $stateParams) {
+    function TaskController($scope, $state, AuthService, $rootScope, TaskService, $stateParams, FormService) {
 
         $scope.type = $stateParams.type; // my or involved tasks
 
@@ -19,7 +19,7 @@
         var getTasks = function(){
 
             if($scope.type==='my'){
-                TaskService.my(
+                TaskService.myTasks(
                     function(res){
                         $scope.tasks = res.data;
                     },
@@ -29,7 +29,7 @@
                 );
             }else
             if($scope.type==='involved'){
-                TaskService.involved(
+                TaskService.involvedTasks(
                     function(res){
                         $scope.tasks = res.data;
                     },
@@ -56,7 +56,7 @@
                 taskId,
                 function(res){
                     $scope.currentForm = res.data;
-                    console.log(res.data);
+                    //console.log(res.data);
                     //add dropdown menu if needed
                     for(var i=0; i<$scope.currentForm.length; i++){
                         checkIfPropertyIsDropdownForSelectingGroupMember(i);
@@ -86,7 +86,7 @@
 
         /*CLAIM TASK*/
         $scope.claim = function(){
-            TaskService.claim(
+            TaskService.claimTask(
                 $scope.currentTaskId,
                 function(res){
                     getTasks();

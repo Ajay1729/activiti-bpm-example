@@ -44,6 +44,8 @@ public class InitController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity defaultInit(final HttpServletRequest request)throws ServletException {
 
+            //6//16//
+
             User user = null;
             Group group = null;
 

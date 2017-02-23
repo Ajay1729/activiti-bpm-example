@@ -28,14 +28,19 @@ import static com.example.constants.Constants.PROCESS_KEY_01;
 
 /***
  *
- // ACTIVITI HOW TO:
+ // ACTIVITI HOW TO QUIDES:
+ //
  // spring guide
- // https://spring.io/blog/2015/03/08/getting-started-with-activiti-and-spring-boot
+ // 	https://spring.io/blog/2015/03/08/getting-started-with-activiti-and-spring-boot
+ //
  // code from guide
- // https://github.com/jbarrez/spring-boot-with-activiti-example
+ // 	https://github.com/jbarrez/spring-boot-with-activiti-example
+ //
  // activiti official guide
- // https://www.activiti.org/userguide/#springSpringBoot
- // [!] activiti rest api adds basic security - @enableAutoConfig(exclude=...) to disable it
+ // 	https://www.activiti.org/userguide/#springSpringBoot
+ //
+ // activiti basic secutity
+ // 	activiti rest api adds basic security - @enableAutoConfig(exclude=...) to disable it
  *
  * */
 @EnableAutoConfiguration(exclude = {
@@ -70,8 +75,8 @@ public class UppApplication {
 
 
 
-
-	/* FOR TESTING */
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/* FOR QUICK TESTING - RANDOM STUFF */
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Bean
 	CommandLineRunner init(final RepositoryService repositoryService,
@@ -161,6 +166,7 @@ public class UppApplication {
 				}
 			};
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
