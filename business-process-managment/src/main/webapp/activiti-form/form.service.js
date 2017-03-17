@@ -9,9 +9,8 @@
    function FormService($http, TaskService){
 
         return{
-            checkIfPropertyIsDropdownForSelectingListItem: function(formProperty){
-
-            //TODO
+            checkIfPropertyIsDropdownForSelectingListItem: function(formProperty, doThis){
+//TODO
 //                //dropdown id template: '<listid>_group_list_<formPropertyId>'
 //                var TEMPLATE_DIVIDER = "_groups_list_";
 //                var id = formProperty.id
@@ -27,8 +26,7 @@
 //                }
 
             },
-            checkIfPropertyIsDropdownForSelectingGroupMember: function(formProperty){
-
+            checkIfPropertyIsDropdownForSelectingGroupMember: function(formProperty, doThis){
 //TODO
 //                    //dropdown id template: '<groupId>_group_member_<formPropertyId>'
 //                    var TEMPLATE_DIVIDER = "_group_member_";
